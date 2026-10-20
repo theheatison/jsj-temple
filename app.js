@@ -1,9 +1,9 @@
 (() => {
   const P = window.PHONE, S = window.STORY;
-  const WD = ["일", "월", "화", "수", "목", "금", "토"];
+  const WD = ["日", "一", "二", "三", "四", "五", "六"];
   const parseD = str => { const [y, m, d] = str.split("-").map(Number); return new Date(y, m - 1, d); };
   const TODAY = P.today ? parseD(P.today) : new Date();
-  if (P.today || !P.day) { P.weekday = WD[TODAY.getDay()] + "요일"; P.day = TODAY.getDate(); }
+  if (P.today || !P.day) { P.weekday = "星期" + WD[TODAY.getDay()]; P.day = TODAY.getDate(); }
   const $ = (s, r = document) => r.querySelector(s);
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const h = (html) => { const t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstElementChild; };
@@ -29,7 +29,7 @@
     maps: `<svg viewBox="0 0 60 60"><rect width="60" height="60" fill="#e8efe1"/><path d="M0 40 L60 22 V34 L0 52Z" fill="#9fd3f5"/><rect x="0" y="0" width="22" height="20" fill="#b9e2a5"/><path d="M-2 14 L62 30" stroke="#fff" stroke-width="5"/><path d="M34 -2 L26 62" stroke="#fff" stroke-width="5"/><path d="M34 -2 L26 62" stroke="#f8c74a" stroke-width="2"/><path d="M41 12a8 8 0 0 0-16 0c0 7 8 15 8 15s8-8 8-15z" fill="#ff3b30"/><circle cx="33" cy="12" r="3" fill="#fff"/></svg>`,
     mines: `<svg viewBox="0 0 60 60"><rect width="60" height="60" fill="#c9ced6"/>${[0,1,2].flatMap(r=>[0,1,2].map(c=>`<rect x="${6+c*16}" y="${6+r*16}" width="15" height="15" fill="${(r+c)%2?'#e4e7ec':'#d6dae1'}"/>`)).join("")}<text x="13.5" y="19" text-anchor="middle" font-size="10" font-weight="800" fill="#2563eb">1</text><text x="45.5" y="51" text-anchor="middle" font-size="10" font-weight="800" fill="#16a34a">2</text><g transform="translate(30 30)"><circle r="5.5" fill="#111"/>${[0,45,90,135].map(a=>`<rect x="-.9" y="-8.5" width="1.8" height="17" fill="#111" transform="rotate(${a})"/>`).join("")}<circle cx="-1.8" cy="-1.8" r="1.4" fill="#fff"/></g><path d="M44 8v10M44 8l7 3-7 3" stroke="#111" stroke-width="1.6" fill="#e5484d"/></svg>`,
     mail: `<svg viewBox="0 0 60 60"><defs><linearGradient id="ml" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e90ff"/><stop offset="1" stop-color="#0a5fd8"/></linearGradient></defs><rect width="60" height="60" fill="url(#ml)"/><rect x="11" y="18" width="38" height="25" rx="3.5" fill="#fff"/><path d="M12 20l18 13 18-13" fill="none" stroke="#9cc3f5" stroke-width="2.2" stroke-linejoin="round"/></svg>`,
-    translate: `<svg viewBox="0 0 60 60"><rect width="60" height="60" fill="#f1f3f7"/><rect x="8" y="10" width="28" height="30" rx="4" fill="#4a86f0"/><text x="22" y="32" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">가</text><rect x="25" y="22" width="27" height="28" rx="4" fill="#fff" stroke="#c9d3e6"/><text x="38.5" y="42" text-anchor="middle" font-size="15" fill="#555">文</text></svg>`,
+    translate: `<svg viewBox="0 0 60 60"><rect width="60" height="60" fill="#f1f3f7"/><rect x="8" y="10" width="28" height="30" rx="4" fill="#4a86f0"/><text x="22" y="32" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">中</text><rect x="25" y="22" width="27" height="28" rx="4" fill="#fff" stroke="#c9d3e6"/><text x="38.5" y="42" text-anchor="middle" font-size="15" fill="#555">文</text></svg>`,
     weather: `<svg viewBox="0 0 60 60"><defs><linearGradient id="wt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b8de8"/><stop offset="1" stop-color="#7fc3f7"/></linearGradient></defs><rect width="60" height="60" fill="url(#wt)"/><circle cx="24" cy="24" r="9" fill="#ffd34d"/><path d="M22 44h20a7 7 0 0 0 0-14 9 9 0 0 0-17-1 6.5 6.5 0 0 0-3 15z" fill="#fff"/></svg>`,
     phone: `<svg viewBox="0 0 60 60"><defs><linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6ef06b"/><stop offset="1" stop-color="#1fc23b"/></linearGradient></defs><rect width="60" height="60" fill="url(#pg)"/><path d="M21.5 14.5c1.4-.9 3.1-.5 4 .9l3 4.7c.8 1.3.5 3-.7 3.9l-2.2 1.7c1.5 3.8 4.6 7.2 8.4 9l1.8-2.1c1-1.1 2.7-1.4 3.9-.5l4.5 3.2c1.3 1 1.6 2.8.6 4.1l-1.6 2.1c-1.6 2-4.3 2.8-6.8 2C25.9 42.1 18.5 34.6 15.4 26c-.9-2.4-.2-5.1 1.8-6.8z" fill="#fff"/></svg>`,
     chrome: `<svg viewBox="0 0 60 60"><rect width="60" height="60" fill="#fff"/><circle cx="30" cy="30" r="21" fill="none" stroke="#1a73e8" stroke-width="3"/><ellipse cx="30" cy="30" rx="9" ry="21" fill="none" stroke="#1a73e8" stroke-width="2.4"/><path d="M10 30h40M13 20h34M13 40h34" stroke="#1a73e8" stroke-width="2.4"/></svg>`,
@@ -58,7 +58,7 @@
     if (name === "juju") return `<div class="av ph ${cls}" style="align-items:center"><span style="color:#f2e6dc;font-weight:700;font-size:40%">J</span></div>`;
     return `<div class="av ${cls}">${PERSON}</div>`;
   };
-  const photoBox = (m, side) => `<div class="photo ${side}">${m.img ? `<img src="${esc(m.img)}" alt="">` : `📷 ${esc(m.caption || "사진")}`}</div>`;
+  const photoBox = (m, side) => `<div class="photo ${side}">${m.img ? `<img src="${esc(m.img)}" alt="">` : `📷 ${esc(m.caption || "照片")}`}</div>`;
 
   /* ================= 네비게이션 ================= */
   const screens = $("#screens"), layer = $("#phoneLayer"), statusbar = $("#statusbar"), homebar = $("#homebar");
@@ -153,9 +153,9 @@
 
   /* ================= 홈 화면 ================= */
   const apps = [
-    ["mail", "메일"], ["calendar", "캘린더"], ["clock", "시계"], ["weather", "날씨"],
-    ["notes", "메모"], ["photos", "사진"], ["camera", "카메라"], ["insta", "Instagram"],
-    ["blockblast", "Block Blast"], ["mines", "지뢰찾기"], ["maps", "지도"]
+    ["mail", "邮件"], ["calendar", "日历"], ["clock", "时钟"], ["weather", "天气"],
+    ["notes", "备忘录"], ["photos", "相册"], ["camera", "相机"], ["insta", "Instagram"],
+    ["blockblast", "Block Blast"], ["mines", "扫雷"], ["maps", "地图"]
   ];
   /* 홈 화면 위젯: 오늘 날짜 + 다음 일정 2개 */
   function nextEvents(n) {
@@ -168,11 +168,11 @@
     const list = nextEvents(2);
     const col = c => ((P.calendar && P.calendar.calendars) || {})[c] || "#8e8e93";
     const MW = P.homeMusic;
-    const cal = `<button class="widget sq" data-app="calendar"><div class="wg-top"><small>${WD[TODAY.getDay()]}요일</small><b>${TODAY.getDate()}</b></div><div class="wg-list">${list.length ? list.map(e => `<div class="wg-ev"><i style="background:${col(e.cal)}"></i><div><b>${esc(e.title)}</b><small>${e.d.getMonth() + 1}/${e.d.getDate()} ${esc(e.start || "")}</small></div></div>`).join("") : `<div class="wg-none">일정 없음</div>`}</div></button>`;
-    const mus = MW ? `<button class="widget sq mw" data-mlink style="grid-column:3 / span 2"><div class="mw-head"><div class="mw-art">${MW.cover ? `<img src="${esc(MW.cover)}" alt="">` : "<span>♪</span>"}</div><svg class="mw-note" viewBox="0 0 24 24"><path d="M9 18V5.5l11-2V16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.8" fill="currentColor"/><circle cx="17.5" cy="16" r="2.8" fill="currentColor"/></svg></div><div class="mw-t"><b>${esc(MW.title)}</b><small>${esc(MW.artist)}</small></div><span class="mw-pause"><svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/></svg>일시 정지</span></button>` : "";
+    const cal = `<button class="widget sq" data-app="calendar"><div class="wg-top"><small>星期${WD[TODAY.getDay()]}</small><b>${TODAY.getDate()}</b></div><div class="wg-list">${list.length ? list.map(e => `<div class="wg-ev"><i style="background:${col(e.cal)}"></i><div><b>${esc(e.title)}</b><small>${e.d.getMonth() + 1}/${e.d.getDate()} ${esc(e.start || "")}</small></div></div>`).join("") : `<div class="wg-none">暂无日程</div>`}</div></button>`;
+    const mus = MW ? `<button class="widget sq mw" data-mlink style="grid-column:3 / span 2"><div class="mw-head"><div class="mw-art">${MW.cover ? `<img src="${esc(MW.cover)}" alt="">` : "<span>♪</span>"}</div><svg class="mw-note" viewBox="0 0 24 24"><path d="M9 18V5.5l11-2V16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.8" fill="currentColor"/><circle cx="17.5" cy="16" r="2.8" fill="currentColor"/></svg></div><div class="mw-t"><b>${esc(MW.title)}</b><small>${esc(MW.artist)}</small></div><span class="mw-pause"><svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/></svg>暂停</span></button>` : "";
     return which === "cal" ? cal : which === "music" ? mus : cal + mus;
   }
-  const dock = [["phone", "전화"], ["chrome", "Chrome"], ["messages", "메시지"], ["kakao", "카카오톡"]];
+  const dock = [["phone", "电话"], ["chrome", "Chrome"], ["messages", "信息"], ["kakao", "KakaoTalk"]];
   const appBtn = ([id, label]) => {
     const b = P.badges[id];
     return `<button class="app" data-app="${id}"><div class="ic${(P.iconRound || []).includes(id) && (P.icons || {})[id] ? " round" : ""}">${(P.icons || {})[id] ? iconImg(P.icons[id], id) : I[id]}</div>${b ? `<em class="badge" data-badge="${id}">${b}</em>` : ""}<span>${esc(label)}</span></button>`;
@@ -184,9 +184,9 @@
   }
   function homeScreen() {
     const el = h(`<section class="screen home" data-dark="0">
-      <button class="back-to-book" data-close>‹ 본문으로</button>
+      <button class="back-to-book" data-close>‹ 返回正文</button>
       <div class="grid">${(() => { const by = id => apps.find(a => a[0] === id), L = ids => ids.map(by).filter(Boolean).map(appBtn).join(""), used = ["clock", "weather", "notes", "photos", "mail", "calendar", "camera", "insta"]; return widgetHTML("cal") + L(used.slice(0, 4)) + widgetHTML("music") + L(used.slice(4)) + apps.filter(a => !used.includes(a[0])).map(appBtn).join(""); })()}</div>
-      <div class="spot"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>검색</div>
+      <div class="spot"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>搜索</div>
       <div class="dock">${dock.map(appBtn).join("")}</div>
     </section>`);
     el.addEventListener("click", e => {
@@ -206,19 +206,19 @@
   }
   function phoneApp() {
     const el = h(`<section class="screen white">
-      <div class="navbar"><span class="pill">편집</span><span class="seg"><span class="on">모두</span><span>부재중 전화</span></span><span class="pill round">${ic.menu}</span></div>
+      <div class="navbar"><span class="pill">编辑</span><span class="seg"><span class="on">全部</span><span>未接来电</span></span><span class="pill round">${ic.menu}</span></div>
       <div class="scroll">
-        <div class="bigtitle">최근 통화</div>
-        <div class="searchfield">${ic.search}<span>검색</span><span class="mic">${ic.mic}</span></div>
+        <div class="bigtitle">最近通话</div>
+        <div class="searchfield">${ic.search}<span>搜索</span><span class="mic">${ic.mic}</span></div>
         <div data-calls>${callsHTML()}</div>
         <div style="height:20px"></div>
       </div>
       <nav class="tabbar">
-        <div><svg viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21l1.5-7L2 9.3l7-.8z"/></svg>즐겨찾기</div>
-        <div class="on"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 6v6l-3 2" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>최근 통화</div>
-        <div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="9.5" r="3.5" fill="#fff"/><path d="M5.5 18.5c1.5-3 4-4 6.5-4s5 1 6.5 4" fill="#fff"/></svg>연락처</div>
-        <div data-keypad><svg viewBox="0 0 24 24">${[4, 12, 20].flatMap(y => [5, 12, 19].map(x => `<circle cx="${x}" cy="${y}" r="2.6"/>`)).join("")}</svg>키패드</div>
-        <div data-vmail><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="6.5" cy="12" r="4"/><circle cx="17.5" cy="12" r="4"/><path d="M6.5 16h11"/></svg>음성 사서함</div>
+        <div><svg viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21l1.5-7L2 9.3l7-.8z"/></svg>收藏</div>
+        <div class="on"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 6v6l-3 2" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>最近通话</div>
+        <div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="9.5" r="3.5" fill="#fff"/><path d="M5.5 18.5c1.5-3 4-4 6.5-4s5 1 6.5 4" fill="#fff"/></svg>通讯录</div>
+        <div data-keypad><svg viewBox="0 0 24 24">${[4, 12, 20].flatMap(y => [5, 12, 19].map(x => `<circle cx="${x}" cy="${y}" r="2.6"/>`)).join("")}</svg>拨号键盘</div>
+        <div data-vmail><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="6.5" cy="12" r="4"/><circle cx="17.5" cy="12" r="4"/><path d="M6.5 16h11"/></svg>语音信箱</div>
       </nav>
     </section>`);
     el.addEventListener("click", e => {
@@ -228,21 +228,21 @@
     });
     return el;
   }
-  /* 음성 사서함: 누르면 펼쳐지고, 재생하면 텍스트 변환이 한 줄씩 나타남 */
+  /* 语音信箱: 누르면 펼쳐지고, 재생하면 텍스트 변환이 한 줄씩 나타남 */
   function voicemailView() {
     const V = P.voicemail || [];
     const secs = s => { const [m, x] = s.split(":").map(Number); return m * 60 + x; };
     const el = h(`<section class="screen white vm">
-      <div class="navbar"><button class="pill round" data-back>${ic.back}</button><span class="pill">편집</span></div>
+      <div class="navbar"><button class="pill round" data-back>${ic.back}</button><span class="pill">编辑</span></div>
       <div class="scroll">
-        <div class="bigtitle">음성 사서함</div>
+        <div class="bigtitle">语音信箱</div>
         ${V.map((v, i) => `<div class="vm-row" data-vm="${i}">
-          <div class="vm-top">${v.new ? '<i class="vm-dot"></i>' : '<i class="vm-dot off"></i>'}<div class="vm-who"><b>${esc(v.from)}</b><small>${esc(v.kind || "휴대전화")}</small></div><div class="vm-when"><span>${esc(v.date)}</span><small>${esc(v.length)}</small></div></div>
+          <div class="vm-top">${v.new ? '<i class="vm-dot"></i>' : '<i class="vm-dot off"></i>'}<div class="vm-who"><b>${esc(v.from)}</b><small>${esc(v.kind || "手机")}</small></div><div class="vm-when"><span>${esc(v.date)}</span><small>${esc(v.length)}</small></div></div>
           <div class="vm-body">
             <div class="vm-bar"><i data-fill></i></div>
             <div class="vm-times"><span data-cur>0:00</span><span data-left>-${esc(v.length)}</span></div>
-            <div class="vm-ctrl"><button data-vplay><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></button><span class="vm-spk">스피커</span><span class="vm-del">삭제</span></div>
-            <div class="vm-tx"><small>텍스트 변환 (베타)</small><p data-tx></p></div>
+            <div class="vm-ctrl"><button data-vplay><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></button><span class="vm-spk">扬声器</span><span class="vm-del">删除</span></div>
+            <div class="vm-tx"><small>文字转写（测试版）</small><p data-tx></p></div>
           </div>
         </div>`).join("")}
         <div style="height:30px"></div>
@@ -298,19 +298,19 @@
       <div class="kp-grid">${keys.map(([k, s]) => `<button data-kk="${k}"><b>${k}</b>${s ? `<small>${s}</small>` : ""}</button>`).join("")}</div>
       <div class="kp-row"><span></span><button class="kp-call" data-kcall><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="#fff"/></svg></button><button class="kp-del" data-kdel hidden>⌫</button></div>
       <nav class="tabbar">
-        <div><svg viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21l1.5-7L2 9.3l7-.8z"/></svg>즐겨찾기</div>
-        <div data-recent><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 6v6l-3 2" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>최근 통화</div>
-        <div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="9.5" r="3.5" fill="#fff"/><path d="M5.5 18.5c1.5-3 4-4 6.5-4s5 1 6.5 4" fill="#fff"/></svg>연락처</div>
-        <div class="on"><svg viewBox="0 0 24 24">${[4, 12, 20].flatMap(y => [5, 12, 19].map(x => `<circle cx="${x}" cy="${y}" r="2.6"/>`)).join("")}</svg>키패드</div>
-        <div data-vmail><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="6.5" cy="12" r="4"/><circle cx="17.5" cy="12" r="4"/><path d="M6.5 16h11"/></svg>음성 사서함</div>
+        <div><svg viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21l1.5-7L2 9.3l7-.8z"/></svg>收藏</div>
+        <div data-recent><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 6v6l-3 2" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>最近通话</div>
+        <div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="9.5" r="3.5" fill="#fff"/><path d="M5.5 18.5c1.5-3 4-4 6.5-4s5 1 6.5 4" fill="#fff"/></svg>通讯录</div>
+        <div class="on"><svg viewBox="0 0 24 24">${[4, 12, 20].flatMap(y => [5, 12, 19].map(x => `<circle cx="${x}" cy="${y}" r="2.6"/>`)).join("")}</svg>拨号键盘</div>
+        <div data-vmail><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="6.5" cy="12" r="4"/><circle cx="17.5" cy="12" r="4"/><path d="M6.5 16h11"/></svg>语音信箱</div>
       </nav>
     </section>`);
     const numEl = el.querySelector("[data-num]"), del = el.querySelector("[data-kdel]");
     const SD = P.speedDial || {}, subEl = el.querySelector("[data-sub]");
-    let speed = null;   // 처음에 단축번호 숫자를 누르면 그 사람이 뜸
+    let speed = null;   // 처음에 快捷拨号 숫자를 누르면 그 사람이 뜸
     const draw = () => {
       numEl.textContent = speed ? speed.key : fmtNum(n); del.hidden = !speed && n === 0;
-      subEl.textContent = speed ? `단축번호 ${speed.key} · ${speed.name}` : "";
+      subEl.textContent = speed ? `快捷拨号 ${speed.key} · ${speed.name}` : "";
     };
     el.addEventListener("click", e => {
       if (e.target.closest("[data-recent]")) { back(); return; }
@@ -433,13 +433,13 @@
   function chromeApp() {
     const CR = P.chrome || { shortcuts: [], searches: [], feed: [], tabs: 1 };
     const card = (f, i) => f.type === "ad"
-      ? `<div class="cr-card cr-ad" data-feed="${i}"><div class="cr-img" style="background:linear-gradient(135deg,${f.tone},${f.tone}cc)"><span>${esc(f.brand)}</span></div><div class="cr-txt"><b>${esc(f.title)}</b><p>${esc(f.sub)}</p><div class="cr-meta"><span class="cr-adtag">광고</span>${esc(f.brand)}<em class="cr-cta">${esc(f.cta || "자세히")}</em></div></div></div>`
+      ? `<div class="cr-card cr-ad" data-feed="${i}"><div class="cr-img" style="background:linear-gradient(135deg,${f.tone},${f.tone}cc)"><span>${esc(f.brand)}</span></div><div class="cr-txt"><b>${esc(f.title)}</b><p>${esc(f.sub)}</p><div class="cr-meta"><span class="cr-adtag">广告</span>${esc(f.brand)}<em class="cr-cta">${esc(f.cta || "详情")}</em></div></div></div>`
       : `<div class="cr-card" data-feed="${i}"><div class="cr-img" style="background:linear-gradient(140deg,${f.tone},${f.tone}55),repeating-linear-gradient(45deg,rgba(255,255,255,.06) 0 8px,transparent 8px 16px)"></div><div class="cr-txt"><b>${esc(f.title)}</b><div class="cr-meta"><span class="cr-src" style="background:${f.tone}">${esc(f.source[0])}</span>${esc(f.source)} · ${esc(f.time)}<em>⋮</em></div></div></div>`;
     const el = h(`<section class="screen white chrome">
-      <div class="cr-bar"><button class="cr-omni" data-search>${ic.search}<span>검색어 또는 URL 입력</span></button></div>
+      <div class="cr-bar"><button class="cr-omni" data-search>${ic.search}<span>搜索词或输入网址</span></button></div>
       <div class="scroll">
-        <div class="cr-logo">검색</div>
-        <button class="cr-box" data-search>${ic.search}<span>검색어 또는 URL 입력</span><span class="cr-mic">${ic.mic}</span></button>
+        <div class="cr-logo">搜索</div>
+        <button class="cr-box" data-search>${ic.search}<span>搜索词或输入网址</span><span class="cr-mic">${ic.mic}</span></button>
         <div class="cr-short">${(CR.shortcuts || []).map(x => `<div><i style="background:${x.color}">${esc(x.letter)}</i><span>${esc(x.label)}</span></div>`).join("")}</div>
         <div class="cr-disc"><b>Discover</b><span>⚙︎</span></div>
         ${(CR.feed || []).map(card).join("")}
@@ -463,7 +463,7 @@
         <div class="cr-when">2026.10.18 · ${esc(f.time)}</div>
         <div class="cr-hero" style="background:linear-gradient(140deg,${f.tone},${f.tone}55)"></div>
         ${(f.body || []).map(p => `<p>${esc(p)}</p>`).join("")}
-        <div class="cr-inline-ad"><span class="cr-adtag">광고</span> 지금 가입하면 첫 달 무료 · 프리미엄 경제 뉴스레터</div>
+        <div class="cr-inline-ad"><span class="cr-adtag">广告</span> 现在注册首月免费 · 高级财经通讯</div>
         <div style="height:30px"></div>
       </div>
     </section>`);
@@ -473,7 +473,7 @@
   function adPage(f) {
     const el = h(`<section class="screen white chrome">
       <div class="cr-bar"><button class="pill round" data-back>${ic.back}</button><div class="cr-omni small"><span>🔒 ${esc(f.brand)}</span></div></div>
-      <div class="scroll"><div class="cr-adhero" style="background:linear-gradient(135deg,${f.tone},${f.tone}aa)"><small>${esc(f.brand)}</small><h1>${esc(f.title)}</h1><p>${esc(f.sub)}</p><span>${esc(f.cta || "자세히")}</span></div></div>
+      <div class="scroll"><div class="cr-adhero" style="background:linear-gradient(135deg,${f.tone},${f.tone}aa)"><small>${esc(f.brand)}</small><h1>${esc(f.title)}</h1><p>${esc(f.sub)}</p><span>${esc(f.cta || "详情")}</span></div></div>
     </section>`);
     el.querySelector("[data-back]").onclick = back;
     return el;
@@ -481,8 +481,8 @@
   function searchHistory() {
     const list = (P.chrome && P.chrome.searches) || P.searches || [];
     const el = h(`<section class="screen white chrome">
-      <div class="cr-bar"><div class="cr-omni active">${ic.search}<span>검색어 또는 URL 입력</span></div><button class="cr-cancel" data-back>취소</button></div>
-      <div class="scroll"><div class="cr-histttl">최근 검색</div>${list.map(s => `<div class="hist">${ic.clock}<span>${esc(s)}</span><button class="del">✕</button></div>`).join("")}</div>
+      <div class="cr-bar"><div class="cr-omni active">${ic.search}<span>搜索词或输入网址</span></div><button class="cr-cancel" data-back>取消</button></div>
+      <div class="scroll"><div class="cr-histttl">最近搜索</div>${list.map(s => `<div class="hist">${ic.clock}<span>${esc(s)}</span><button class="del">✕</button></div>`).join("")}</div>
     </section>`);
     el.querySelector("[data-back]").onclick = back;
     el.addEventListener("click", e => { const d = e.target.closest(".del"); if (d) d.parentElement.remove(); });
@@ -493,13 +493,13 @@
   function messagesApp() {
     const M = P.messages;
     const el = h(`<section class="screen white">
-      <div class="navbar"><span class="pill">편집</span><b style="font-size:17px">메시지</b><span class="pill round">${ic.menu}</span></div>
+      <div class="navbar"><span class="pill">编辑</span><b style="font-size:17px">信息</b><span class="pill round">${ic.menu}</span></div>
       <div class="scroll">
         ${M.pinned ? `<button class="pinned" style="width:100%" data-chat="${esc(M.pinned)}">${av(M.pinned)}<span>${esc(M.pinned)}</span></button>` : `<div style="height:8px"></div>`}
         <div data-threads>${threadsHTML()}</div>
         <div style="height:110px"></div>
       </div>
-      <div class="bottomsearch" style="position:absolute;left:0;right:0;bottom:0"><div class="searchfield">${ic.search}<span>검색</span><span class="mic">${ic.mic}</span></div><span class="pill round">${ic.compose}</span></div>
+      <div class="bottomsearch" style="position:absolute;left:0;right:0;bottom:0"><div class="searchfield">${ic.search}<span>搜索</span><span class="mic">${ic.mic}</span></div><span class="pill round">${ic.compose}</span></div>
     </section>`);
     el.addEventListener("click", e => {
       const c = e.target.closest("[data-chat]"), t = e.target.closest("[data-thread]");
@@ -513,7 +513,7 @@
   function threadsHTML() {
     return P.messages.threads.map((t, i) => `<button class="thread" style="width:100%;text-align:left" data-thread="${i}">${t.unread ? '<i class="dot"></i>' : ""}${av(t.name)}<div class="body"><div class="row"><span class="nm">${esc(t.name)}</span><span class="when">${esc(t.when)}</span></div><div class="pv">${esc(t.preview)}</div></div></button>`).join("");
   }
-  /* 입력창: 글자를 쓰면 보내기 버튼이 나오고, 보내면 onSend(text) */
+  /* 입력창: 글자를 쓰면 发送 버튼이 나오고, 보내면 onSend(text) */
   function wireComposer(el, onSend) {
     const input = el.querySelector("[data-input]"), btn = el.querySelector("[data-send]");
     const sync = () => btn.classList.toggle("on", input.value.trim().length > 0);
@@ -534,7 +534,7 @@
     const el = h(`<section class="screen white">
       <div class="chat-head"><button class="pill round" data-back>${ic.back}</button><div class="who" ${(P.callScripts || {})[name] ? "data-callme" : ""}>${av(name)}<b>${esc(name)} ›</b></div>${(P.callScripts || {})[name] ? `<button class="pill round" data-callme><svg viewBox="0 0 24 24" width="20" height="20"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="currentColor"/></svg></button>` : `<span class="pill round">${ic.video}</span>`}</div>
       <div class="scroll" data-autobottom><div class="imsg">${body}</div></div>
-      <div class="composer${sms ? " is-sms" : ""}"><span class="plus">+</span><label class="field"><input data-input enterkeyhint="send" autocomplete="off" placeholder="${sms ? "문자 메시지" : "iMessage"}"><button class="send" data-send aria-label="보내기"><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></label></div>
+      <div class="composer${sms ? " is-sms" : ""}"><span class="plus">+</span><label class="field"><input data-input enterkeyhint="send" autocomplete="off" placeholder="${sms ? "短信" : "iMessage"}"><button class="send" data-send aria-label="发送"><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></label></div>
     </section>`);
     el.querySelector("[data-back]").onclick = back;
     el.querySelectorAll("[data-callme]").forEach(b => { b.style.cursor = "pointer"; b.onclick = () => outgoingCall(name); });
@@ -600,15 +600,15 @@
     return el;
   }
 
-  /* ================= 카카오톡 ================= */
+  /* ================= KakaoTalk ================= */
   let kakaoNotified = false;
   const kav = c => c && c.channel ? `<div class="av kch"><span>${esc(c.name[0])}</span></div>` : av(c ? c.name : "");
   function kakaoApp() {
     const K = P.kakao;
     const row = (c, extra = "") => `<button class="kk-row ${extra}${c.pinned ? " pin" : ""}" style="width:100%;text-align:left" data-room="${esc(c.name)}">${kav(c)}<div class="body"><div class="nm">${esc(c.name)}${c.pinned ? `<svg class="kpin" viewBox="0 0 24 24" width="13" height="13"><path d="M15 3l6 6-3 1-4 4 .5 4.5L13 20l-4-4-5 5-1-1 5-5-4-4 1.5-1.5L10 10l4-4z" fill="#b0b0b5"/></svg>` : ""}</div><div class="pv">${esc(c.preview)}</div></div><div class="meta"><span>${esc(c.when)}</span>${c.unread ? `<em>${c.unread}</em>` : ""}</div></button>`;
     const el = h(`<section class="screen kk">
-      <div class="kk-top"><h2>채팅</h2><div class="icons">${ic.search}<svg viewBox="0 0 24 24"><path d="M12 4c-4.4 0-8 2.9-8 6.5 0 2.3 1.5 4.3 3.7 5.5L7 20l3.6-2.4c.5.1.9.1 1.4.1 4.4 0 8-2.9 8-6.5S16.4 4 12 4z"/></svg><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 9 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0-1.1-2.7H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 9a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 2.7-1.1V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 2.7 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1.3z"/></svg></div></div>
-      <div class="kk-chips"><span class="on">전체</span><span>💬 <em data-kbadge>${P.badges.kakao}</em></span><span>ChatGPT</span><span style="color:#2fbf4a">✆</span></div>
+      <div class="kk-top"><h2>聊天</h2><div class="icons">${ic.search}<svg viewBox="0 0 24 24"><path d="M12 4c-4.4 0-8 2.9-8 6.5 0 2.3 1.5 4.3 3.7 5.5L7 20l3.6-2.4c.5.1.9.1 1.4.1 4.4 0 8-2.9 8-6.5S16.4 4 12 4z"/></svg><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 9 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0-1.1-2.7H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 9a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 2.7-1.1V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 2.7 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1.3z"/></svg></div></div>
+      <div class="kk-chips"><span class="on">全部</span><span>💬 <em data-kbadge>${P.badges.kakao}</em></span><span>ChatGPT</span><span style="color:#2fbf4a">✆</span></div>
       <div class="scroll">
         ${K.ad ? `<div class="kk-ad"><div><small>${esc(K.ad.label)} ›</small><b>${esc(K.ad.title)}</b><span>${esc(K.ad.sub)}</span></div><div class="${K.ad.icon === "book" ? "kbook" : K.ad.icon === "coat" ? "kcoat" : "bottle"}"></div></div>` : ""}
         <div data-list>${K.chats.map(c => row(c)).join("")}</div>
@@ -641,7 +641,7 @@
     const K = P.kakao;
     msgTone();
     const room = (K.rooms[from] = K.rooms[from] || []);
-    const todayLabel = `${TODAY.getFullYear()}년 ${TODAY.getMonth() + 1}월 ${TODAY.getDate()}일 ${WD[TODAY.getDay()]}요일`;
+    const todayLabel = `${TODAY.getFullYear()}年 ${TODAY.getMonth() + 1}月 ${TODAY.getDate()}日 星期${WD[TODAY.getDay()]}`;
     const lastDate = [...room].reverse().find(m => m.date);
     const needDate = !lastDate || lastDate.date !== todayLabel;
     if (needDate) room.push({ date: todayLabel });
@@ -661,7 +661,7 @@
       top.querySelector(".kmsgs").insertAdjacentHTML("beforeend", `${needDate ? `<div class="date">${todayLabel}</div>` : ""}<div class="kline them"><div class="kb">${esc(text)}</div><div class="kmeta"><span>${esc(P.time)}</span></div></div>`);
       const sc = top.querySelector(".scroll"); sc.scrollTop = sc.scrollHeight;
     } else {
-      showBanner({ app: "카카오톡", from, text, onTap: () => openKakaoRoom(from) });
+      showBanner({ app: "KakaoTalk", from, text, onTap: () => openKakaoRoom(from) });
     }
   }
   /* 알림을 눌렀을 때: 카톡 앱 → 해당 대화방으로 바로 이동 */
@@ -702,14 +702,14 @@
     const body = msgs.map(m => {
       if (m.date) return `<div class="date">${esc(m.date)}</div>`;
       const side = m.me ? "me" : "them";
-      const inner = m.deleted ? `<div class="kb kdel">ⓘ 삭제된 메시지입니다.</div>` : m.img !== undefined ? photoBox(m, side) : `<div class="kb">${esc(m.text)}</div>`;
+      const inner = m.deleted ? `<div class="kb kdel">ⓘ 消息已删除</div>` : m.img !== undefined ? photoBox(m, side) : `<div class="kb">${esc(m.text)}</div>`;
       const meta = (m.time || m.unread) ? `<div class="kmeta">${m.unread ? `<i>${m.unread}</i>` : ""}<span>${esc(m.time || "")}</span></div>` : "";
       return `<div class="kline ${side}">${inner}${meta}</div>`;
     }).join("");
     const el = h(`<section class="screen kroom">
       <div class="chat-head"><button class="pill round" data-back>${ic.back}</button><b style="font-size:17px;padding-top:10px">${esc(name)}</b><span class="pill round">${ic.search}</span></div>
       <div class="scroll" data-autobottom><div class="kmsgs">${body}</div></div>
-      <div class="kcomp"><label class="field"><span class="plus">+</span><input data-input enterkeyhint="send" autocomplete="off" placeholder="메시지 입력"><span class="hash">#</span><button class="ksend" data-send aria-label="전송"><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="#3c1e1e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></label></div>
+      <div class="kcomp"><label class="field"><span class="plus">+</span><input data-input enterkeyhint="send" autocomplete="off" placeholder="输入消息"><span class="hash">#</span><button class="ksend" data-send aria-label="发送"><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="#3c1e1e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></label></div>
     </section>`);
     el.dataset.room = name;
     el._rename = n => { name = n; };
@@ -718,10 +718,10 @@
       let SC = (P.kakao.scripted || {})[name];
       if (SC && SC.once && SC.used) SC = null;
       if (SC) SC.used = true;
-      // 트리거 단어를 한참 안 쓰면 정해진 문장이 대신 전송됨
+      // 트리거 단어를 한참 안 쓰면 정해진 문장이 대신 发送됨
       let sendText = typed;
       const NG = !SC && (P.kakao.nudge || {})[name];
-      if (NG && !NG.done) {   // 아직 안 쓴 트리거 단어만, 그 단어 없이 after번 보내면 대신 전송 (한 번만)
+      if (NG && !NG.done) {   // 아직 안 쓴 트리거 단어만, 그 단어 없이 after번 보내면 대신 发送 (한 번만)
         const has = (t, w) => t.replace(/\s+/g, "").includes(w);
         NG.used = NG.used || {};
         const left = () => NG.lines.filter(l => !NG.used[l.word]);
@@ -736,7 +736,7 @@
         }
       }
       (SC ? SC.send : [sendText]).forEach(text => {
-      const todayLabel = `${TODAY.getFullYear()}년 ${TODAY.getMonth() + 1}월 ${TODAY.getDate()}일 ${WD[TODAY.getDay()]}요일`;
+      const todayLabel = `${TODAY.getFullYear()}年 ${TODAY.getMonth() + 1}月 ${TODAY.getDate()}日 星期${WD[TODAY.getDay()]}`;
       const lastDate = [...msgs].reverse().find(m => m.date);
       const needDate = !lastDate || lastDate.date !== todayLabel;
       if (needDate) msgs.push({ date: todayLabel });
@@ -749,7 +749,7 @@
       if (kakaoList && kakaoList.el.isConnected) { const list = kakaoList.el.querySelector("[data-list]"); list.querySelector(`[data-room="${CSS.escape(name)}"]`)?.remove(); kPrepend(list, h(kakaoList.row(c)), c); }
       });
       const K = P.kakao, text = sendText;
-      // 정해진 대화: 무엇을 보내도 위 문장이 전송되고, 답장은 목록 중 하나가 랜덤
+      // 정해진 대화: 무엇을 보내도 위 문장이 发送되고, 답장은 목록 중 하나가 랜덤
       if (SC) {
         setTimeout(() => { msgs.forEach(m => { if (m.me) delete m.unread; }); el.querySelectorAll(".kline.me .kmeta i").forEach(x => x.remove()); }, 900);
         setTimeout(() => deliverKakao(name, SC.replies[Math.floor(Math.random() * SC.replies.length)]), 1800);
@@ -789,7 +789,7 @@
   function showBanner(N) {
     if (bannerCur && bannerCur !== N && bannerCur.onHide) { const prev = bannerCur; bannerCur = null; prev.onHide(); }
     bannerCur = N;
-    banner.innerHTML = `<div class="bi${N.kind === "calendar" ? " cal" : ""}">${N.kind === "calendar" ? I.calendar : ""}</div><div class="bt"><small>${esc(N.app)}</small><b>${esc(N.from)}</b>${esc(N.text)}</div><time>지금</time>`;
+    banner.innerHTML = `<div class="bi${N.kind === "calendar" ? " cal" : ""}">${N.kind === "calendar" ? I.calendar : ""}</div><div class="bt"><small>${esc(N.app)}</small><b>${esc(N.from)}</b>${esc(N.text)}</div><time>现在</time>`;
     banner.hidden = false;
     requestAnimationFrame(() => requestAnimationFrame(() => banner.classList.add("show")));
     clearTimeout(bannerTimer); bannerTimer = setTimeout(hideBanner, N.duration || 5000);
@@ -809,15 +809,15 @@
     const el = h(`<section class="screen notes">
       <div class="navbar"><span class="pill round">${ic.back}</span><span class="pill round">${ic.more}</span></div>
       <div class="scroll">
-        <div class="bigtitle" style="padding-bottom:4px">모든 iCloud</div>
-        <div class="count">${P.notes.length}개의 메모</div>
+        <div class="bigtitle" style="padding-bottom:4px">全部 iCloud</div>
+        <div class="count">${P.notes.length}条备忘录</div>
         ${groups.map(g => `<h3>${esc(g.name)}</h3>${g.items.map(([n, i]) => {
-          const first = n.body.split("\n").filter(Boolean).join(" ") || "추가 텍스트 없음";
-          return `<button class="ncard" data-note="${i}"><b>${esc(n.title)}</b><div class="d"><em>${esc(n.date)}</em>${esc(first)}</div><div class="f">🗀 메모</div></button>`;
+          const first = n.body.split("\n").filter(Boolean).join(" ") || "无更多文字";
+          return `<button class="ncard" data-note="${i}"><b>${esc(n.title)}</b><div class="d"><em>${esc(n.date)}</em>${esc(first)}</div><div class="f">🗀 备忘录</div></button>`;
         }).join("")}`).join("")}
         <div style="height:20px"></div>
       </div>
-      <div class="bottomsearch"><div class="searchfield">${ic.search}<span>검색</span><span class="mic">${ic.mic}</span></div><span class="pill round">${ic.compose}</span></div>
+      <div class="bottomsearch"><div class="searchfield">${ic.search}<span>搜索</span><span class="mic">${ic.mic}</span></div><span class="pill round">${ic.compose}</span></div>
     </section>`);
     el.querySelector(".navbar .pill").onclick = goHome;
     el.addEventListener("click", e => { const c = e.target.closest("[data-note]"); if (c) show(noteDetail(P.notes[+c.dataset.note]), "push"); });
@@ -847,18 +847,18 @@
   /* ================= 번역 ================= */
   function translateApp() {
     const el = h(`<section class="screen white">
-      <div class="tr-top"><button data-saved><svg viewBox="0 0 24 24"><path d="M7 3h10v18l-5-4-5 4z"/></svg></button><span class="brand"><b>번역</b></span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18.5c1.5-2 3.5-3 5.5-3s4 1 5.5 3"/></svg></div>
-      <div class="tr-input">텍스트 입력</div>
-      <div class="tr-langs"><span>한국어</span>⇄<span>중국어(번체)</span></div>
-      <div class="tr-actions"><span class="sm"><i></i>실시간 번역</span><span class="mic">${ic.mic}</span><span class="sm"><i></i>카메라</span></div>
+      <div class="tr-top"><button data-saved><svg viewBox="0 0 24 24"><path d="M7 3h10v18l-5-4-5 4z"/></svg></button><span class="brand"><b>翻译</b></span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18.5c1.5-2 3.5-3 5.5-3s4 1 5.5 3"/></svg></div>
+      <div class="tr-input">输入文字</div>
+      <div class="tr-langs"><span>韩语</span>⇄<span>中文（繁体）</span></div>
+      <div class="tr-actions"><span class="sm"><i></i>实时翻译</span><span class="mic">${ic.mic}</span><span class="sm"><i></i>相机</span></div>
     </section>`);
     el.querySelector("[data-saved]").onclick = () => show(savedTranslations(), "push");
     return el;
   }
   function savedTranslations() {
     const el = h(`<section class="screen white">
-      <div class="tr-head"><button data-back>‹ 홈</button>저장된 번역</div>
-      <div class="tr-tabs"><span class="on">표현 노트</span><span>스크립트</span></div>
+      <div class="tr-head"><button data-back>‹ 主页</button>已保存的翻译</div>
+      <div class="tr-tabs"><span class="on">表达笔记</span><span>脚本</span></div>
       <div class="scroll">${P.translations.map(t => `<div class="tr-item"><div class="t"><div class="src">${esc(t.src)}</div><div class="ko">${esc(t.ko)}</div></div><i class="bm"></i></div>`).join("")}<div style="height:40px"></div></div>
     </section>`);
     el.querySelector("[data-back]").onclick = back;
@@ -875,9 +875,9 @@
       return `background:linear-gradient(${(i * 67) % 360}deg,hsl(${hue} 25% ${l}%),hsl(${(hue + 40) % 360} 30% ${l - 22}%))`;
     };
     const el = h(`<section class="screen photos">
-      <div class="ph-head"><div><h2>보관함</h2><small>${esc(P.photos.count)}개의 항목</small></div><div class="btns"><span class="pill round">${ic.menu}</span><span class="pill">선택</span></div></div>
+      <div class="ph-head"><div><h2>资料库</h2><small>${esc(P.photos.count)}个项目</small></div><div class="btns"><span class="pill round">${ic.menu}</span><span class="pill">选择</span></div></div>
       <div class="scroll"><div class="ph-grid">${[...Array(n)].map((_, i) => `<div data-ph="${i}" style="${tile(i)}"></div>`).join("")}</div><div style="height:120px"></div></div>
-      <div class="ph-tab"><span class="seg2"><span class="on"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="5" width="15" height="14" rx="2"/><rect x="6" y="2" width="15" height="14" rx="2" opacity=".5"/></svg>보관함</span><span><svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="6" width="16" height="14" rx="2"/><rect x="6" y="3" width="12" height="2" rx="1"/></svg>모음</span></span><span class="srch">${ic.search}</span></div>
+      <div class="ph-tab"><span class="seg2"><span class="on"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="5" width="15" height="14" rx="2"/><rect x="6" y="2" width="15" height="14" rx="2" opacity=".5"/></svg>资料库</span><span><svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="6" width="16" height="14" rx="2"/><rect x="6" y="3" width="12" height="2" rx="1"/></svg>合集</span></span><span class="srch">${ic.search}</span></div>
     </section>`);
     el.addEventListener("click", e => {
       const t = e.target.closest("[data-ph]"); if (!t) return;
@@ -891,7 +891,7 @@
 
 
   /* ================= 시계 ================= */
-  /* 타이머가 끝나면: 알림 + 알림음 → 잠시 뒤 정해진 링크로 이동 (다른 앱을 보고 있어도 작동) */
+  /* 计时器가 끝나면: 알림 + 알림음 → 잠시 뒤 정해진 링크로 이동 (다른 앱을 보고 있어도 작동) */
   let timerDone = null;
   function armTimer(ms) {
     clearTimeout(timerDone); timerDone = null;
@@ -899,7 +899,7 @@
     timerDone = setTimeout(() => {
       const C = P.clock || {}, T = C._timer; if (T) T.running = false;
       try { msgTone(); setTimeout(msgTone, 400); setTimeout(msgTone, 800); } catch (e) {}
-      showBanner({ app: "시계", from: "타이머", text: "타이머가 끝났습니다" });
+      showBanner({ app: "时钟", from: "计时器", text: "计时结束" });
       const link = (C.timer || {}).link;
       if (link) setTimeout(() => { window.location.href = link; }, 1500);
     }, Math.max(0, ms));
@@ -907,10 +907,10 @@
   function clockApp() {
     const C = P.clock || {};
     const tabs = [
-      ["world", "세계 시계", `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9.5"/><ellipse cx="12" cy="12" rx="4.2" ry="9.5"/><path d="M2.5 12h19M4 7h16M4 17h16M12 2.5v19"/></svg>`],
-      ["alarm", "알람", `<svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8" fill="currentColor"/><path d="M12 9v4.5H9" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M3.5 6.5l3-3M20.5 6.5l-3-3" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M7 20l-1.5 2M17 20l1.5 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`],
-      ["stopwatch", "스톱워치", `<svg viewBox="0 0 24 24"><circle cx="12" cy="13.5" r="8.5" fill="currentColor"/><path d="M12 9v5" stroke="#000" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="14" r="1.3" fill="#000"/><path d="M10 2.5h4M12 2.5V5M18.5 6l1.5-1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`],
-      ["timer", "타이머", `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3a9 9 0 1 1-6.4 2.6"/><path d="M12 3v3M7.5 8.5L12 12"/></svg>`]
+      ["world", "世界时钟", `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9.5"/><ellipse cx="12" cy="12" rx="4.2" ry="9.5"/><path d="M2.5 12h19M4 7h16M4 17h16M12 2.5v19"/></svg>`],
+      ["alarm", "闹钟", `<svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8" fill="currentColor"/><path d="M12 9v4.5H9" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M3.5 6.5l3-3M20.5 6.5l-3-3" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M7 20l-1.5 2M17 20l1.5 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`],
+      ["stopwatch", "秒表", `<svg viewBox="0 0 24 24"><circle cx="12" cy="13.5" r="8.5" fill="currentColor"/><path d="M12 9v5" stroke="#000" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="14" r="1.3" fill="#000"/><path d="M10 2.5h4M12 2.5V5M18.5 6l1.5-1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`],
+      ["timer", "计时器", `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3a9 9 0 1 1-6.4 2.6"/><path d="M12 3v3M7.5 8.5L12 12"/></svg>`]
     ];
     const el = h(`<section class="screen clock" data-dark="1">
       <div class="ck-body"></div>
@@ -920,42 +920,42 @@
     const alive = () => el.isConnected;
     const pad = n => String(n).padStart(2, "0");
 
-    /* --- 세계 시계 --- */
+    /* --- 世界时钟 --- */
     const world = () => {
       const [hh, mm] = P.time.split(":").map(Number), home = C.home ?? 9;
-      return `<div class="ck-nav"><span></span><span class="ck-btn">편집</span><span class="ck-btn round">＋</span></div>
-      <div class="scroll"><h1 class="ck-title">세계 시계</h1>
+      return `<div class="ck-nav"><span></span><span class="ck-btn">编辑</span><span class="ck-btn round">＋</span></div>
+      <div class="scroll"><h1 class="ck-title">世界时钟</h1>
       ${(C.world || []).map(w => {
-        const diff = w.offset - home; let t = hh * 60 + mm + diff * 60, day = "오늘";
-        if (t < 0) { t += 1440; day = "어제"; } else if (t >= 1440) { t -= 1440; day = "내일"; }
+        const diff = w.offset - home; let t = hh * 60 + mm + diff * 60, day = "今天";
+        if (t < 0) { t += 1440; day = "昨天"; } else if (t >= 1440) { t -= 1440; day = "明天"; }
         const H = Math.floor(t / 60), M = t % 60;
-        const ap = H < 12 ? "오전" : "오후", h12 = H % 12 === 0 ? 12 : H % 12;
-        return `<div class="ck-row"><div><small>${day}, ${diff >= 0 ? "+" : ""}${diff}시간</small><b class="ck-city">${esc(w.city)}</b></div><div class="ck-wt"><span>${ap}</span>${h12}:${pad(M)}</div></div>`;
+        const ap = H < 12 ? "上午" : "下午", h12 = H % 12 === 0 ? 12 : H % 12;
+        return `<div class="ck-row"><div><small>${day}, ${diff >= 0 ? "+" : ""}${diff}小时</small><b class="ck-city">${esc(w.city)}</b></div><div class="ck-wt"><span>${ap}</span>${h12}:${pad(M)}</div></div>`;
       }).join("")}</div>`;
     };
 
-    /* --- 알람 --- */
-    const alarm = () => `<div class="ck-nav"><span></span><span class="ck-btn">편집</span><span class="ck-btn round">＋</span></div>
-      <div class="scroll"><h1 class="ck-title">알람</h1>
-        <div class="ck-sec">🛏 수면 | 기상</div>
-        <div class="ck-row"><span class="ck-none">${esc(C.sleep || "알람 없음")}</span><span class="ck-chg">변경</span></div>
-        <div class="ck-sec" style="margin-top:44px">기타</div>
-        ${(C.alarms || []).map((a, i) => `<div class="ck-row ${a.on ? "" : "off"}" data-alarm="${i}"><div><div class="ck-time">${esc(a.time)}</div><small>${esc(a.label)}${a.repeat ? " · " + esc(a.repeat) : ""}</small></div><button class="sw ${a.on ? "on" : ""}" aria-label="알람 켜기/끄기"><i></i></button></div>`).join("")}
+    /* --- 闹钟 --- */
+    const alarm = () => `<div class="ck-nav"><span></span><span class="ck-btn">编辑</span><span class="ck-btn round">＋</span></div>
+      <div class="scroll"><h1 class="ck-title">闹钟</h1>
+        <div class="ck-sec">🛏 睡眠 | 起床</div>
+        <div class="ck-row"><span class="ck-none">${esc(C.sleep || "无闹钟")}</span><span class="ck-chg">更改</span></div>
+        <div class="ck-sec" style="margin-top:44px">其他</div>
+        ${(C.alarms || []).map((a, i) => `<div class="ck-row ${a.on ? "" : "off"}" data-alarm="${i}"><div><div class="ck-time">${esc(a.time)}</div><small>${esc(a.label)}${a.repeat ? " · " + esc(a.repeat) : ""}</small></div><button class="sw ${a.on ? "on" : ""}" aria-label="开关闹钟"><i></i></button></div>`).join("")}
       </div>`;
 
-    /* --- 스톱워치 --- */
+    /* --- 秒表 --- */
     const sw = C._sw || (C._sw = { run: false, start: 0, acc: 0, laps: [], lapStart: 0 });
     const swNow = () => sw.acc + (sw.run ? performance.now() - sw.start : 0);
     const fmt = ms => { const cs = Math.floor(ms / 10) % 100, s = Math.floor(ms / 1000) % 60, m = Math.floor(ms / 60000); return `${pad(m)}:${pad(s)}.${pad(cs)}`; };
     const stopwatch = () => `<div class="ck-nav"></div>
       <div class="ck-sw-time" data-swt>${fmt(swNow())}</div>
-      <div class="ck-btns"><button class="cbtn gray" data-swl>${sw.run ? "랩" : (swNow() ? "재설정" : "랩")}</button><span class="ck-dots"><i class="on"></i><i></i></span><button class="cbtn ${sw.run ? "red" : "green"}" data-sws>${sw.run ? "중단" : "시작"}</button></div>
+      <div class="ck-btns"><button class="cbtn gray" data-swl>${sw.run ? "计次" : (swNow() ? "重置" : "计次")}</button><span class="ck-dots"><i class="on"></i><i></i></span><button class="cbtn ${sw.run ? "red" : "green"}" data-sws>${sw.run ? "停止" : "开始"}</button></div>
       <div class="scroll ck-laps" data-laps></div>`;
     const drawLaps = () => {
       const box = body.querySelector("[data-laps]"); if (!box) return;
       const cur = swNow() - sw.lapStart;
-      const rows = (swNow() || sw.laps.length) ? [`<div class="lap"><span>랩 ${sw.laps.length + 1}</span><span>${fmt(cur)}</span></div>`] : [];
-      sw.laps.slice().reverse().forEach((l, i) => rows.push(`<div class="lap"><span>랩 ${sw.laps.length - i}</span><span>${fmt(l)}</span></div>`));
+      const rows = (swNow() || sw.laps.length) ? [`<div class="lap"><span>计次 ${sw.laps.length + 1}</span><span>${fmt(cur)}</span></div>`] : [];
+      sw.laps.slice().reverse().forEach((l, i) => rows.push(`<div class="lap"><span>计次 ${sw.laps.length - i}</span><span>${fmt(l)}</span></div>`));
       box.innerHTML = rows.join("");
     };
     const swLoop = () => {
@@ -964,18 +964,18 @@
       requestAnimationFrame(swLoop);
     };
 
-    /* --- 타이머 --- */
+    /* --- 计时器 --- */
     const T = C._timer || (C._timer = { h: C.timer?.h ?? 0, m: C.timer?.m ?? 9, s: C.timer?.s ?? 0, running: false, paused: false, end: 0, left: 0, total: 0 });
     const wheel = (key, max, unit) => `<div class="wheel" data-wheel="${key}" data-max="${max}"><div class="wpad"></div>${[...Array(max + 1)].map((_, i) => `<div class="wi">${i}</div>`).join("")}<div class="wpad"></div></div><span class="wunit u-${key}">${unit}</span>`;
     const tLeft = () => T.running ? (T.paused ? T.left : Math.max(0, T.end - Date.now())) : 0;
     const tfmt = ms => { const t = Math.ceil(ms / 1000), H = Math.floor(t / 3600), M = Math.floor(t / 60) % 60, S = t % 60; return H ? `${H}:${pad(M)}:${pad(S)}` : `${pad(M)}:${pad(S)}`; };
-    const timer = () => `<div class="ck-nav"><span></span><span></span><span class="ck-btn">편집</span></div>
-      <div class="scroll"><h1 class="ck-title">타이머</h1>
+    const timer = () => `<div class="ck-nav"><span></span><span></span><span class="ck-btn">编辑</span></div>
+      <div class="scroll"><h1 class="ck-title">计时器</h1>
         ${T.running ? `<div class="ck-ring"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" class="bg"/><circle cx="50" cy="50" r="46" class="fg" data-ring/></svg><div class="ck-rt" data-tt>${tfmt(tLeft())}</div></div>`
-          : `<div class="picker"><div class="pbar"></div>${wheel("h", 23, "시간")}${wheel("m", 59, "분")}${wheel("s", 59, "초")}</div>`}
-        <div class="ck-btns"><button class="cbtn gray ${T.running ? "" : "x"}" data-tc ${T.running ? "" : "disabled"}>${T.running ? "취소" : "✕"}</button><button class="cbtn ${T.running && !T.paused ? "orange" : "green"}" data-ts>${T.running ? (T.paused ? "재개" : "일시 정지") : `<svg width="30" height="30" viewBox="0 0 24 24"><path d="M7 4l14 8-14 8z" fill="currentColor"/></svg>`}</button></div>
-        <div class="ck-card"><div><span>레이블</span><span class="dim">타이머</span></div><div><span>사운드</span><span class="dim">${esc(C.timer?.sound || "공지음")} ›</span></div></div>
-        ${(C.timerRecent || []).length ? `<div class="ck-sec" style="margin:34px 20px 0">최근 항목</div>${C.timerRecent.map(r => `<div class="ck-row" style="margin:0 20px"><div><div class="ck-time dim">${esc(r)}</div><small>${esc(r)}</small></div><span class="cbtn green sm"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M7 4l14 8-14 8z" fill="currentColor"/></svg></span></div>`).join("")}` : ""}
+          : `<div class="picker"><div class="pbar"></div>${wheel("h", 23, "时间")}${wheel("m", 59, "分钟")}${wheel("s", 59, "秒")}</div>`}
+        <div class="ck-btns"><button class="cbtn gray ${T.running ? "" : "x"}" data-tc ${T.running ? "" : "disabled"}>${T.running ? "取消" : "✕"}</button><button class="cbtn ${T.running && !T.paused ? "orange" : "green"}" data-ts>${T.running ? (T.paused ? "继续" : "暂停") : `<svg width="30" height="30" viewBox="0 0 24 24"><path d="M7 4l14 8-14 8z" fill="currentColor"/></svg>`}</button></div>
+        <div class="ck-card"><div><span>标签</span><span class="dim">计时器</span></div><div><span>声音</span><span class="dim">${esc(C.timer?.sound || "提示音")} ›</span></div></div>
+        ${(C.timerRecent || []).length ? `<div class="ck-sec" style="margin:34px 20px 0">最近项目</div>${C.timerRecent.map(r => `<div class="ck-row" style="margin:0 20px"><div><div class="ck-time dim">${esc(r)}</div><small>${esc(r)}</small></div><span class="cbtn green sm"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M7 4l14 8-14 8z" fill="currentColor"/></svg></span></div>`).join("")}` : ""}
         <div style="height:30px"></div>
       </div>`;
     const tLoop = () => {
@@ -1033,8 +1033,8 @@
     const el = h(`<section class="screen cam" data-dark="1">
       <div class="cam-top"><span class="cam-ic">⚡︎</span><span class="cam-chev">⌃</span><span class="cam-ic">◎</span></div>
       <div class="cam-view"><video playsinline muted autoplay></video><div class="cam-msg" hidden></div><div class="cam-flash"></div><span class="cam-zoom">1×</span></div>
-      <div class="cam-modes"><span>시네마틱</span><span>동영상</span><b>사진</b><span>인물 사진</span><span>파노라마</span></div>
-      <div class="cam-bottom"><button class="cam-thumb" data-thumb></button><button class="cam-shutter" data-shoot aria-label="촬영"><i></i></button><button class="cam-flip" data-flip aria-label="카메라 전환"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-14.6-4.5M4 13a8 8 0 0 0 14.6 4.5"/><path d="M5 3v4h4M19 21v-4h-4"/></svg></button></div>
+      <div class="cam-modes"><span>电影效果</span><span>视频</span><b>照片</b><span>人像</span><span>全景</span></div>
+      <div class="cam-bottom"><button class="cam-thumb" data-thumb></button><button class="cam-shutter" data-shoot aria-label="拍摄"><i></i></button><button class="cam-flip" data-flip aria-label="切换摄像头"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-14.6-4.5M4 13a8 8 0 0 0 14.6 4.5"/><path d="M5 3v4h4M19 21v-4h-4"/></svg></button></div>
     </section>`);
     const video = el.querySelector("video"), msg = el.querySelector(".cam-msg"), thumb = el.querySelector("[data-thumb]");
     let stream = null, facing = "environment", dead = false;
@@ -1093,8 +1093,8 @@
     const color = cal => (C.calendars || {})[cal] || "#8e8e93";
     function eventsOn(d) {
       const k = key(d), md = k.slice(5), list = [];
-      (holiday[k] || []).forEach(t => list.push({ title: t, cal: "대한민국 공휴일", allday: true }));
-      (C.birthdays || []).forEach(b => { if (b.md === md) list.push({ title: `${b.name} 생일`, cal: "생일", allday: true }); });
+      (holiday[k] || []).forEach(t => list.push({ title: t, cal: "韩国公休日", allday: true }));
+      (C.birthdays || []).forEach(b => { if (b.md === md) list.push({ title: `${b.name} 生日`, cal: "생일", allday: true }); });
       (C.events || []).filter(e => e.date === k).sort((a, b) => (a.start || "").localeCompare(b.start || "")).forEach(e => list.push({ ...e, allday: !e.start }));
       return list;
     }
@@ -1106,11 +1106,11 @@
       <div class="cal-grid" data-grid></div>
       <div class="cal-day" data-dayttl></div>
       <div class="scroll cal-list" data-list></div>
-      <div class="cal-bottom"><button class="pill" data-today>오늘</button><span class="pill">캘린더</span><span class="pill">받은 편지함</span></div>
+      <div class="cal-bottom"><button class="pill" data-today>今天</button><span class="pill">日历</span><span class="pill">收件箱</span></div>
     </section>`);
     const grid = el.querySelector("[data-grid]"), list = el.querySelector("[data-list]");
     function renderMonth() {
-      el.querySelector("[data-ttl]").textContent = `${view.getFullYear()}년 ${view.getMonth() + 1}월`;
+      el.querySelector("[data-ttl]").textContent = `${view.getFullYear()}年 ${view.getMonth() + 1}月`;
       const first = view.getDay(), days = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
       let html = "";
       for (let i = 0; i < first; i++) html += `<span></span>`;
@@ -1120,16 +1120,16 @@
         if (dt.getDay() === 0 || holiday[k]) cls.push("red"); else if (dt.getDay() === 6) cls.push("sat");
         if (k === key(TODAY)) cls.push("today");
         if (k === key(sel)) cls.push("sel");
-        const dots = ev.filter(e => e.cal !== "대한민국 공휴일").slice(0, 3).map(e => `<i style="background:${color(e.cal)}"></i>`).join("");
+        const dots = ev.filter(e => e.cal !== "韩国公休日").slice(0, 3).map(e => `<i style="background:${color(e.cal)}"></i>`).join("");
         html += `<button class="${cls.join(" ")}" data-d="${k}"><b>${d}</b><em>${dots}</em></button>`;
       }
       grid.innerHTML = html;
     }
     function renderDay() {
       const ev = eventsOn(sel);
-      el.querySelector("[data-dayttl]").textContent = `${sel.getMonth() + 1}월 ${sel.getDate()}일 ${WD[sel.getDay()]}요일${key(sel) === key(TODAY) ? " · 오늘" : ""}`;
-      list.innerHTML = ev.length ? ev.map((e, i) => `<button class="cev" data-ev="${i}"><i style="background:${color(e.cal)}"></i><div><b>${e.emoji ? e.emoji + " " : ""}${esc(e.title)}</b>${e.place ? `<small>${esc(e.place)}</small>` : ""}</div><span>${e.allday ? "하루 종일" : esc(e.start) + (e.end ? `<br>${esc(e.end)}` : "")}</span></button>`).join("")
-        : `<div class="cal-empty">일정 없음</div>`;
+      el.querySelector("[data-dayttl]").textContent = `${sel.getMonth() + 1}月 ${sel.getDate()}日 星期${WD[sel.getDay()]}${key(sel) === key(TODAY) ? " · 今天" : ""}`;
+      list.innerHTML = ev.length ? ev.map((e, i) => `<button class="cev" data-ev="${i}"><i style="background:${color(e.cal)}"></i><div><b>${e.emoji ? e.emoji + " " : ""}${esc(e.title)}</b>${e.place ? `<small>${esc(e.place)}</small>` : ""}</div><span>${e.allday ? "全天" : esc(e.start) + (e.end ? `<br>${esc(e.end)}` : "")}</span></button>`).join("")
+        : `<div class="cal-empty">暂无日程</div>`;
       list._ev = ev;
     }
     function go(delta) { view = new Date(view.getFullYear(), view.getMonth() + delta, 1); grid.classList.remove("slide-l", "slide-r"); void grid.offsetWidth; grid.classList.add(delta > 0 ? "slide-l" : "slide-r"); renderMonth(); }
@@ -1154,14 +1154,14 @@
   }
   function eventDetail(e, d) {
     const C = P.calendar || {}, col = (C.calendars || {})[e.cal] || "#8e8e93";
-    const dateStr = `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일 (${WD[d.getDay()]})`;
+    const dateStr = `${d.getFullYear()}年 ${d.getMonth() + 1}月 ${d.getDate()}日 星期${WD[d.getDay()]}`;
     const el = h(`<section class="screen calapp">
-      <div class="navbar"><button class="pill round" data-back>${ic.back}</button><span class="pill">편집</span></div>
+      <div class="navbar"><button class="pill round" data-back>${ic.back}</button><span class="pill">编辑</span></div>
       <div class="scroll">
-        <div class="evd-head"><h2>${e.emoji ? e.emoji + " " : ""}${esc(e.title)}</h2>${e.place ? `<p class="evd-place">${esc(e.place)}</p>` : ""}<p>${dateStr}</p><p>${e.allday ? "하루 종일" : `${esc(e.start)}${e.end ? ` ~ ${esc(e.end)}` : ""}`}</p></div>
-        <div class="evd-card"><div><span>캘린더</span><span class="evd-cal"><i style="background:${col}"></i>${esc(e.cal)}</span></div><div><span>알림</span><span class="dim">${e.allday ? "당일 (오전 9시)" : "30분 전"}</span></div></div>
-        ${e.memo ? `<div class="evd-card"><div style="display:block"><span class="dim" style="font-size:13px">메모</span><p style="margin:6px 0 0">${esc(e.memo)}</p></div></div>` : ""}
-        ${e.allday && e.cal === "대한민국 공휴일" ? "" : `<div class="evd-card"><div><span style="color:#ff3b30">이벤트 삭제</span></div></div>`}
+        <div class="evd-head"><h2>${e.emoji ? e.emoji + " " : ""}${esc(e.title)}</h2>${e.place ? `<p class="evd-place">${esc(e.place)}</p>` : ""}<p>${dateStr}</p><p>${e.allday ? "全天" : `${esc(e.start)}${e.end ? ` ~ ${esc(e.end)}` : ""}`}</p></div>
+        <div class="evd-card"><div><span>日历</span><span class="evd-cal"><i style="background:${col}"></i>${esc(e.cal)}</span></div><div><span>提醒</span><span class="dim">${e.allday ? "当天（上午9点）" : "30分钟前"}</span></div></div>
+        ${e.memo ? `<div class="evd-card"><div style="display:block"><span class="dim" style="font-size:13px">备忘录</span><p style="margin:6px 0 0">${esc(e.memo)}</p></div></div>` : ""}
+        ${e.allday && e.cal === "韩国公休日" ? "" : `<div class="evd-card"><div><span style="color:#ff3b30">删除日程</span></div></div>`}
       </div>
     </section>`);
     el.querySelector("[data-back]").onclick = back;
@@ -1169,7 +1169,7 @@
   }
 
 
-  /* ================= 지뢰찾기 (실제 플레이 + 최고기록) ================= */
+  /* ================= 扫雷 (실제 플레이 + 최고기록) ================= */
   /* ================= 인스타그램 ================= */
   function instaApp() {
     const G = P.insta || { stories: [], posts: [] };
@@ -1204,15 +1204,15 @@
       <button class="${G._profSeen ? "" : "dot"}${on === "me" ? " me-on" : ""}" data-pdot ${on === "me" ? "" : "data-profile"}>${avatar(G.me || "me")}</button>
     </nav>`;
     const avatar = (id, big) => `<span class="ig-av${big ? " big" : ""}" style="background:hsl(${[...id].reduce((a, c) => a + c.charCodeAt(0), 0) % 360} 55% 62%)">${esc(((id.match(/[a-z0-9가-힣]/i) || [id[0]])[0]).toUpperCase())}</span>`;
-    const story = s => `<div class="ig-story${s.seen ? " seen" : ""}"><div class="ring">${s.me ? avatar(P.insta.me || "me", true) + '<b class="add">+</b>' : avatar(s.id, true)}</div><small>${esc(s.me ? "내 스토리" : s.id)}</small></div>`;
+    const story = s => `<div class="ig-story${s.seen ? " seen" : ""}"><div class="ring">${s.me ? avatar(P.insta.me || "me", true) + '<b class="add">+</b>' : avatar(s.id, true)}</div><small>${esc(s.me ? "我的快拍" : s.id)}</small></div>`;
     const post = (q, i, mine) => `<article class="ig-post">
-      <header><span class="ig-ring">${avatar(q.id)}</span><div><b>${esc(q.id)}${q.verified ? II.verified : ""}</b>${q.ad ? `<small>광고</small>` : q.music ? `<small>${II.note}${esc(q.music)}</small>` : q.place ? `<small>${esc(q.place)}</small>` : ""}</div>${q.follow ? `<span class="ig-follow">팔로우</span>` : ""}<span class="mo">${mine ? II.more : II.menu}</span></header>
+      <header><span class="ig-ring">${avatar(q.id)}</span><div><b>${esc(q.id)}${q.verified ? II.verified : ""}</b>${q.ad ? `<small>广告</small>` : q.music ? `<small>${II.note}${esc(q.music)}</small>` : q.place ? `<small>${esc(q.place)}</small>` : ""}</div>${q.follow ? `<span class="ig-follow">关注</span>` : ""}<span class="mo">${mine ? II.more : II.menu}</span></header>
       <div class="ig-img" style="${q.img ? `background:url('${esc(q.img)}') center/cover` : `background:${q.bg}`}">${q.img ? "" : `<span>${q.emoji || ""}</span>`}${q.headline ? `<b class="ig-adh">${esc(q.headline)}</b>` : ""}</div>
-      ${q.ad ? `<div class="ig-cta"><span>${esc(q.cta || "더 알아보기")}</span><i>›</i></div>` : ""}
+      ${q.ad ? `<div class="ig-cta"><span>${esc(q.cta || "了解更多")}</span><i>›</i></div>` : ""}
       <div class="ig-act">${mine ? II.heart : `<button data-like="${i}" class="${q.liked ? "on" : ""}">${II.heart}</button>`}${II.com}${II.send}<span style="flex:1"></span>${II.save}</div>
-      <div class="ig-txt"><b ${mine ? "" : `data-likes="${i}"`}>좋아요 ${(q.likes + (q.liked ? 1 : 0)).toLocaleString()}개</b>
+      <div class="ig-txt"><b ${mine ? "" : `data-likes="${i}"`}>赞 ${(q.likes + (q.liked ? 1 : 0)).toLocaleString()}</b>
         <p><b>${esc(q.id)}</b> ${esc(q.caption)}</p>
-        ${q.comments ? `<span class="c">댓글 ${q.comments}개 모두 보기</span>` : ""}
+        ${q.comments ? `<span class="c">查看全部 ${q.comments} 条评论</span>` : ""}
         <span class="t">${esc(q.when)}</span></div>
     </article>`;
     const el = h(`<section class="screen ig">
@@ -1224,7 +1224,7 @@
       </div>
       ${tabBar("home")}
     </section>`);
-    /* 팔로잉 목록: 맨 위 지정 계정들 + 나머지는 랜덤 이름·아이디 */
+    /* 关注 목록: 맨 위 지정 계정들 + 나머지는 랜덤 이름·아이디 */
     function followingList() {
       const M = G.profile || {}, top = M.followingTop || [];
       const total = parseInt(String(M.following || "0").replace(/,/g, ""), 10) || top.length;
@@ -1245,10 +1245,10 @@
       const M = G.profile || {}, list = followingList();
       const v = h(`<section class="screen ig">
         <div class="ig-top"><button class="ig-back" data-back>${ic.back}</button><span class="ig-uname" style="flex:1;text-align:center;margin-right:40px">${esc(G.me || "")}</span></div>
-        <div class="ig-ftabs"><span>팔로워 ${esc(M.followers || "0")}</span><span class="on">팔로잉 ${esc(M.following || "0")}</span></div>
+        <div class="ig-ftabs"><span>粉丝 ${esc(M.followers || "0")}</span><span class="on">关注 ${esc(M.following || "0")}</span></div>
         <div class="scroll">
-          <div class="ig-search">${II.search}<span>검색</span></div>
-          ${list.map((u, i) => `<div class="ig-frow" ${u.profile ? `data-user="${i}"` : ""}>${avatar(u.id)}<div><b>${esc(u.id)}</b><small>${esc(u.name)}</small></div><span class="ig-fbtn">팔로잉</span></div>`).join("")}
+          <div class="ig-search">${II.search}<span>搜索</span></div>
+          ${list.map((u, i) => `<div class="ig-frow" ${u.profile ? `data-user="${i}"` : ""}>${avatar(u.id)}<div><b>${esc(u.id)}</b><small>${esc(u.name)}</small></div><span class="ig-fbtn">关注</span></div>`).join("")}
           <div style="height:30px"></div>
         </div>
       </section>`);
@@ -1258,18 +1258,18 @@
       });
       return v;
     }
-    /* 다른 사람 프로필 (게시물 없는 계정) */
+    /* 다른 사람 프로필 (帖子 없는 계정) */
     function userView(u) {
       const pf = u.profile || {};
       const v = h(`<section class="screen ig">
         <div class="ig-top"><button class="ig-back" data-back>${ic.back}</button><span class="ig-uname">${esc(u.id)}</span><span class="ig-ti">${II.more}</span></div>
         <div class="scroll">
           <div class="ig-prof"><div class="ig-pav">${avatar(u.id, true)}</div>
-            <div class="ig-stats"><div><b>0</b><small>게시물</small></div><div><b>${esc(pf.followers || "0")}</b><small>팔로워</small></div><div><b>${esc(pf.following || "0")}</b><small>팔로잉</small></div></div></div>
+            <div class="ig-stats"><div><b>0</b><small>帖子</small></div><div><b>${esc(pf.followers || "0")}</b><small>粉丝</small></div><div><b>${esc(pf.following || "0")}</b><small>关注</small></div></div></div>
           <div class="ig-bio"><b>${esc(u.name)}</b></div>
-          <div class="ig-btns"><span>팔로잉 ⌄</span><span>메시지</span></div>
+          <div class="ig-btns"><span>关注 ⌄</span><span>私信</span></div>
           <div class="ig-gtabs"><span class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3.5" y="3.5" width="17" height="17"/><path d="M3.5 9.5h17M3.5 14.5h17M9.5 3.5v17M14.5 3.5v17"/></svg></span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><circle cx="12" cy="10" r="3"/><path d="M6.5 19c1-3 3.2-4.5 5.5-4.5s4.5 1.5 5.5 4.5"/></svg></span></div>
-          <div class="ig-empty"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></i><b>게시물 없음</b></div>
+          <div class="ig-empty"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></i><b>暂无帖子</b></div>
         </div>
       </section>`);
       v.querySelector("[data-back]").onclick = back;
@@ -1281,8 +1281,8 @@
       const v = h(`<section class="screen ig">
         <div class="ig-top"><button class="ig-back" data-back>${ic.back}</button><span class="ig-uname">${esc(G.me || "")} ⌄</span><span class="ig-ti">${II.plus}</span></div>
         <div class="scroll">
-          <div class="ig-search">${II.search}<span>검색</span></div>
-          <div class="ig-dmh"><b>메시지</b><span>요청</span></div>
+          <div class="ig-search">${II.search}<span>搜索</span></div>
+          <div class="ig-dmh"><b>信息</b><span>请求</span></div>
           ${D.map((c, i) => `<button class="ig-dmrow${c.unread ? " unread" : ""}" data-dmi="${i}">${avatar(c.id)}<div><b>${esc(c.name || c.id)}</b><small>${esc(c.preview)} · ${esc(c.when)}</small></div>${c.unread ? "<i></i>" : ""}</button>`).join("")}
           <div style="height:30px"></div>
         </div>
@@ -1301,8 +1301,8 @@
       const body = (c.msgs || []).map(m => m.date ? `<div class="ig-dmdate">${esc(m.date)}</div>` : `<div class="ig-bub ${m.me ? "me" : ""}">${m.me ? "" : avatar(c.id)}<span>${esc(m.text)}</span></div>`).join("");
       const v = h(`<section class="screen ig">
         <div class="ig-top"><button class="ig-back" data-back>${ic.back}</button><div class="ig-dmt-wrap" data-uprof>${avatar(c.id)}<div class="ig-dmt"><b>${esc(c.name || c.id)}</b><small>${esc(c.id)}</small></div></div></div>
-        <div class="scroll" data-autobottom><div class="ig-dmhead" data-uprof>${avatar(c.id, true)}<b>${esc(c.name || c.id)}</b><small>${esc(c.id)} · Instagram</small>${prof ? `<span class="ig-viewprof">프로필 보기</span>` : ""}</div>${body}${c.status ? `<div class="ig-seen">${esc(c.status)}</div>` : ""}<div style="height:16px"></div></div>
-        <div class="ig-comp"><span>메시지 보내기...</span></div>
+        <div class="scroll" data-autobottom><div class="ig-dmhead" data-uprof>${avatar(c.id, true)}<b>${esc(c.name || c.id)}</b><small>${esc(c.id)} · Instagram</small>${prof ? `<span class="ig-viewprof">查看主页</span>` : ""}</div>${body}${c.status ? `<div class="ig-seen">${esc(c.status)}</div>` : ""}<div style="height:16px"></div></div>
+        <div class="ig-comp"><span>发送消息...</span></div>
       </section>`);
       v.querySelector("[data-back]").onclick = back;
       if (prof) v.querySelectorAll("[data-uprof]").forEach(x => { x.style.cursor = "pointer"; x.onclick = () => show(userView(prof), "push"); });
@@ -1315,9 +1315,9 @@
         <div class="ig-top"><button class="ig-back" data-back>${ic.back}</button><span class="ig-uname">${esc(G.me || "")}</span><span class="ig-ti">${II.plus}${II.more}</span></div>
         <div class="scroll">
           <div class="ig-prof"><div class="ig-pav">${avatar(G.me || "me", true)}</div>
-            <div class="ig-stats"><div><b>${list.length}</b><small>게시물</small></div><div><b>${esc(M.followers || "0")}</b><small>팔로워</small></div><div data-following><b>${esc(M.following || "0")}</b><small>팔로잉</small></div></div></div>
+            <div class="ig-stats"><div><b>${list.length}</b><small>帖子</small></div><div><b>${esc(M.followers || "0")}</b><small>粉丝</small></div><div data-following><b>${esc(M.following || "0")}</b><small>关注</small></div></div></div>
           <div class="ig-bio"><b>${esc(M.name || "")}</b><p>${esc(M.bio || "")}</p></div>
-          <div class="ig-btns"><span>프로필 편집</span><span>프로필 공유</span></div>
+          <div class="ig-btns"><span>编辑主页</span><span>分享主页</span></div>
           <div class="ig-gtabs"><span class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3.5" y="3.5" width="17" height="17"/><path d="M3.5 9.5h17M3.5 14.5h17M9.5 3.5v17M14.5 3.5v17"/></svg></span><span>${II.reels}</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><circle cx="12" cy="10" r="3"/><path d="M6.5 19c1-3 3.2-4.5 5.5-4.5s4.5 1.5 5.5 4.5"/></svg></span></div>
           <div class="ig-grid">${list.map((q, i) => `<button data-mine="${i}" style="${q.img ? `background:url('${esc(q.img)}') center/cover` : `background:${q.bg}`}">${q.img ? "" : `<span>${q.emoji || ""}</span>`}</button>`).join("")}</div>
           <div style="height:30px"></div>
@@ -1331,7 +1331,7 @@
         const t = e.target.closest("[data-mine]"); if (!t) return;
         const i = +t.dataset.mine;
         const pv = h(`<section class="screen ig">
-          <div class="ig-top"><button class="ig-back" data-back>${ic.back}</button><span class="ig-uname" style="flex:1;text-align:center;margin-right:40px">게시물</span></div>
+          <div class="ig-top"><button class="ig-back" data-back>${ic.back}</button><span class="ig-uname" style="flex:1;text-align:center;margin-right:40px">帖子</span></div>
           <div class="scroll">${list.slice(i).map((q, k) => post({ ...q, id: G.me }, i + k, true)).join("")}<div style="height:30px"></div></div>
         </section>`);
         pv.querySelector("[data-back]").onclick = back;
@@ -1346,7 +1346,7 @@
       const b = e.target.closest("[data-like]"); if (!b) return;
       const i = +b.dataset.like, q = G.posts[i]; q.liked = !q.liked;
       b.classList.toggle("on", q.liked);
-      el.querySelector(`[data-likes="${i}"]`).textContent = `좋아요 ${(q.likes + (q.liked ? 1 : 0)).toLocaleString()}개`;
+      el.querySelector(`[data-likes="${i}"]`).textContent = `赞 ${(q.likes + (q.liked ? 1 : 0)).toLocaleString()}`;
     });
     return el;
   }
@@ -1369,14 +1369,14 @@
       <div class="mp-tools"><span>🗺</span><span>➤</span></div>
       <div class="mp-sheet">
         <div class="mp-grab"></div>
-        <div class="mp-search">${ic.search}<span>지도 검색</span><span class="mic">${ic.mic}</span></div>
+        <div class="mp-search">${ic.search}<span>搜索地图</span><span class="mic">${ic.mic}</span></div>
         <div class="mp-card" data-card hidden></div>
         <div data-list>
-          <div class="mp-h">즐겨찾기</div>
+          <div class="mp-h">收藏</div>
           <div class="mp-favs">${(M.favorites || []).map((f, i) => `<button data-fav="${i}"><i style="background:${f.color}">${f.icon}</i><b>${esc(f.name)}</b><small>${esc(f.dist)}</small></button>`).join("")}</div>
-          <div class="mp-h">나의 목록</div>
-          <button class="mp-row" data-foodlist><i style="background:#ff9500;color:#fff">🍴</i><div><b>맛집 리스트</b><small>${(M.food || []).length}곳 · 전국</small></div><span class="mp-chev">›</span></button>
-          <div class="mp-h">최근 항목</div>
+          <div class="mp-h">我的列表</div>
+          <button class="mp-row" data-foodlist><i style="background:#ff9500;color:#fff">🍴</i><div><b>美食清单</b><small>${(M.food || []).length}处 · 全国</small></div><span class="mp-chev">›</span></button>
+          <div class="mp-h">最近项目</div>
           ${(M.recents || []).map((r, i) => `<button class="mp-row" data-rec="${i}"><i>${r.icon || "📍"}</i><div><b>${esc(r.name)}</b><small>${esc(r.addr)}</small></div></button>`).join("")}
         </div>
       </div>
@@ -1394,7 +1394,7 @@
       <path d="M210 200 Q230 300 270 360" stroke="#c7e6b4" stroke-width="30" fill="none" opacity=".6" stroke-linecap="round"/>
       ${(M.food || []).map((f, i) => [f, i]).sort((a, b) => (a[1] === sel) - (b[1] === sel)).map(([f, i]) => `<g data-fpin="${i}" transform="translate(${f.x} ${f.y})" style="cursor:pointer"><circle r="${sel === i ? 17 : 12}" fill="${sel === i ? "#ff3b30" : "#ff9500"}" stroke="#fff" stroke-width="3"/><text y="5" text-anchor="middle" font-size="${sel === i ? 15 : 11}">🍴</text>${sel === i ? `<text y="-26" text-anchor="middle" font-size="22" font-weight="800" fill="#1c1c1e" stroke="#fff" stroke-width="4" paint-order="stroke">${esc(f.name)}</text>` : ""}</g>`).join("")}
     </svg>`;
-    const foodList = () => `<div class="mp-fhead"><button data-fback>‹ 목록</button><b>🍴 맛집 리스트</b><span>${(M.food || []).length}곳</span></div>
+    const foodList = () => `<div class="mp-fhead"><button data-fback>‹ 列表</button><b>🍴 美食清单</b><span>${(M.food || []).length}处</span></div>
       ${(M.food || []).map((f, i) => `<button class="mp-row" data-food="${i}"><i>${f.icon || "🍴"}</i><div><b>${esc(f.name)}</b><small>${esc(f.city)} · ${esc(f.menu)}</small>${f.memo ? `<em>${esc(f.memo)}</em>` : ""}</div></button>`).join("")}`;
     const enterFood = sel => {
       mapBox.innerHTML = korea(sel); mapBox.classList.add("food");
@@ -1405,7 +1405,7 @@
     const open = it => {
       pin.hidden = false; pin.style.left = (it.x ?? 50) + "%"; pin.style.top = (it.y ?? 40) + "%";
       card.innerHTML = `<div class="mp-ct"><div><b>${esc(it.name)}</b><small>${esc(it.addr || "")}${it.dist ? " · " + esc(it.dist) : ""}</small></div><button data-cclose>✕</button></div>
-        <div class="mp-cbtns"><span class="go">🚗 ${esc(it.time || "12분")}</span><span>📞 전화</span><span>⭐ 저장</span></div>${it.note ? `<p class="mp-note">${esc(it.note)}</p>` : ""}`;
+        <div class="mp-cbtns"><span class="go">🚗 ${esc(it.time || "12分钟")}</span><span>📞 电话</span><span>⭐ 收藏</span></div>${it.note ? `<p class="mp-note">${esc(it.note)}</p>` : ""}`;
       card.hidden = false; list.hidden = true;
     };
     el.addEventListener("click", e => {
@@ -1440,7 +1440,7 @@
       <div class="bb-top"><div class="bb-best">👑 <b data-best>${best}</b></div><div class="bb-score" data-score>0</div></div>
       <div class="bb-board" data-board>${Array.from({ length: SZ * SZ }, (_, i) => `<i data-i="${i}"></i>`).join("")}</div>
       <div class="bb-tray" data-tray></div>
-      <div class="bb-over" data-over hidden><b>더 이상 놓을 곳이 없어요</b><span data-final></span><button data-reset>다시 하기</button></div>
+      <div class="bb-over" data-over hidden><b>没有空位了</b><span data-final></span><button data-reset>再试一次</button></div>
     </section>`);
     const boardEl = el.querySelector("[data-board]"), trayEl = el.querySelector("[data-tray]"), cellsEl = [...boardEl.children];
     const rnd = a => a[Math.floor(Math.random() * a.length)];
@@ -1474,7 +1474,7 @@
     function checkOver() {
       if (tray.some(pc => pc && canPlace(pc.s))) return;
       over = true;
-      el.querySelector("[data-final]").textContent = `점수 ${score}`;
+      el.querySelector("[data-final]").textContent = `分数 ${score}`;
       el.querySelector("[data-over]").hidden = false;
     }
     function place(k, x, y) {
@@ -1554,11 +1554,11 @@
     const fmt = t => `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`;
     let cells, started, over, flagMode = false, t0 = 0, timer = null, opened = 0, best = loadBest();
     const el = h(`<section class="screen mines">
-      <div class="navbar"><button class="pill round" data-home>${ic.back}</button><b style="font-size:17px">지뢰찾기</b><span class="pill round" data-reset>↻</span></div>
-      <div class="ms-bar"><div><small>남은 지뢰</small><b data-left>${N}</b></div><button class="ms-face" data-reset>🙂</button><div><small>시간</small><b data-time>0:00</b></div></div>
-      <div class="ms-best">최고 기록 <b data-best>${best != null ? fmt(best) : "-"}</b></div>
+      <div class="navbar"><button class="pill round" data-home>${ic.back}</button><b style="font-size:17px">扫雷</b><span class="pill round" data-reset>↻</span></div>
+      <div class="ms-bar"><div><small>剩余地雷</small><b data-left>${N}</b></div><button class="ms-face" data-reset>🙂</button><div><small>时间</small><b data-time>0:00</b></div></div>
+      <div class="ms-best">最高纪录 <b data-best>${best != null ? fmt(best) : "-"}</b></div>
       <div class="ms-board" data-board style="grid-template-columns:repeat(${W},1fr)"></div>
-      <div class="ms-tools"><button class="ms-mode on" data-mode="dig">⛏ 열기</button><button class="ms-mode" data-mode="flag">🚩 깃발</button></div>
+      <div class="ms-tools"><button class="ms-mode on" data-mode="dig">⛏ 打开</button><button class="ms-mode" data-mode="flag">🚩 插旗</button></div>
       <div class="ms-msg" data-msg></div>
     </section>`);
     const board = el.querySelector("[data-board]"), faceEl = el.querySelector(".ms-face"), msg = el.querySelector("[data-msg]");
@@ -1597,12 +1597,12 @@
         cells.forEach((c, i) => { if (c.mine && !c.flag) { c.flag = true; draw(i); } });
         el.querySelector("[data-left]").textContent = 0;
         let rec = "";
-        if (best == null || t < best) { best = t; try { localStorage.setItem(KEY, String(t)); } catch (e) {} el.querySelector("[data-best]").textContent = fmt(t); rec = " · 최고 기록!"; }
-        msg.textContent = `성공! ${fmt(t)}${rec}`; msg.className = "ms-msg win";
+        if (best == null || t < best) { best = t; try { localStorage.setItem(KEY, String(t)); } catch (e) {} el.querySelector("[data-best]").textContent = fmt(t); rec = " · 最高纪录!"; }
+        msg.textContent = `成功！ ${fmt(t)}${rec}`; msg.className = "ms-msg win";
       } else {
         faceEl.textContent = "😵";
         cells.forEach((c, i) => { if (c.mine) { c.open = true; draw(i); } });
-        msg.textContent = "펑! 다시 해볼까요?"; msg.className = "ms-msg lose";
+        msg.textContent = "炸了！再试一次？"; msg.className = "ms-msg lose";
       }
     }
     function act(i, flag) {
@@ -1696,7 +1696,7 @@
     try { navigator.vibrate && navigator.vibrate([700, 300, 700]); } catch (e) {}
   }
   function stopRing() { clearInterval(ringTimer); ringTimer = null; try { navigator.vibrate && navigator.vibrate(0); } catch (e) {} }
-  /* 저장명 바꾸기: 데이터 전체(카톡·전화·음성 사서함·캘린더 등)와 지금 열려 있는 화면의 이름을 한꺼번에 변경 */
+  /* 저장명 바꾸기: 데이터 전체(카톡·전화·语音信箱·캘린더 등)와 지금 열려 있는 화면의 이름을 한꺼번에 변경 */
   function renameContact(oldN, newN) {
     if (!oldN || !newN || oldN === newN) return;
     const seen = new WeakSet();
@@ -1718,7 +1718,7 @@
   function logCall(name, missed) {
     const last = P.calls[0];
     if (last && last.name === name && !!last.missed === !!missed && last.dir === "in" && last.when === P.time) last.count = (last.count || 1) + 1;
-    else P.calls.unshift({ name, kind: "휴대전화", dir: "in", missed: !!missed, when: P.time });
+    else P.calls.unshift({ name, kind: "手机", dir: "in", missed: !!missed, when: P.time });
     if (missed) { P.badges.phone = (P.badges.phone || 0) + 1; document.querySelectorAll('[data-badge="phone"]').forEach(b => b.textContent = P.badges.phone); }
     refreshCalls();
   }
@@ -1740,14 +1740,14 @@
     hideBanner();
     callEl = h(`<div class="callui">
       <div class="cu-ringview">
-        <div class="cu-name">${esc(name)}</div><div class="cu-sub">휴대전화</div>
-        <div class="cu-small"><button data-decline><i>${CI.later}</i>나중에 보기</button><button data-decline><i>${CI.msg}</i>메시지</button></div>
-        <div class="cu-slider" data-slider><div class="cu-track-text">밀어서 통화하기</div><div class="cu-knob" data-knob>${CI.phone}</div></div>
+        <div class="cu-name">${esc(name)}</div><div class="cu-sub">手机</div>
+        <div class="cu-small"><button data-decline><i>${CI.later}</i>稍后提醒</button><button data-decline><i>${CI.msg}</i>信息</button></div>
+        <div class="cu-slider" data-slider><div class="cu-track-text">滑动接听</div><div class="cu-knob" data-knob>${CI.phone}</div></div>
       </div>
       <div class="cu-liveview">
-        <div class="cu-name">${esc(name)}</div><div class="cu-sub"><span class="cu-sim">기본</span><span data-ctime>00:00</span></div>
+        <div class="cu-name">${esc(name)}</div><div class="cu-sub"><span class="cu-sim">默认</span><span data-ctime>00:00</span></div>
         <div class="cu-line" data-line></div>
-        <div class="cu-grid">${[["mute", "소리 끔"], ["keypad", "키패드"], ["audio", "오디오"], ["add", "통화 추가"], ["facetime", "FaceTime"], ["contact", "연락처"]].map(([k, l]) => `<button class="cu-key" data-key="${k}"><i>${CI[k]}</i><small>${l}</small></button>`).join("")}</div>
+        <div class="cu-grid">${[["mute", "静音"], ["keypad", "拨号键盘"], ["audio", "音频"], ["add", "添加通话"], ["facetime", "FaceTime"], ["contact", "通讯录"]].map(([k, l]) => `<button class="cu-key" data-key="${k}"><i>${CI[k]}</i><small>${l}</small></button>`).join("")}</div>
         <button class="cu-end" data-end>${CI.hang}</button>
       </div>
     </div>`);
@@ -1757,7 +1757,7 @@
     ringOnce(); ringTimer = setInterval(ringOnce, 2600);
     const missTimer = setTimeout(() => { if (callEl && !callEl.classList.contains("live")) { stopRing(); logCall(name, true); closeCall(); } }, (C.ringSeconds || 30) * 1000);
     callEl.querySelectorAll("[data-decline]").forEach(b => b.onclick = () => { clearTimeout(missTimer); stopRing(); logCall(name, true); closeCall(); });
-    // 밀어서 통화하기
+    // 滑动接听
     const slider = callEl.querySelector("[data-slider]"), knob = callEl.querySelector("[data-knob]");
     let sx = null, max = 0;
     knob.addEventListener("pointerdown", e => { sx = e.clientX; max = slider.clientWidth - knob.offsetWidth - 12; knob.setPointerCapture(e.pointerId); knob.style.transition = "none"; e.stopPropagation(); });
@@ -1779,7 +1779,7 @@
       callEl.querySelectorAll('[data-key="mute"],[data-key="audio"]').forEach(k => k.onclick = () => k.classList.toggle("on"));
       const lineEl = callEl.querySelector("[data-line]"), timers = [];
       let ended = false;
-      const endCall = (cut, lab) => { if (ended) return; ended = true; timers.forEach(clearTimeout); clearInterval(callTimer); if (cut !== true) lineEl.classList.remove("show"); logCall(name, false); tEl.textContent = lab || "통화 종료"; setTimeout(closeCall, cut === true ? 1600 : 900); if (C.onEnd) setTimeout(C.onEnd, cut === true ? 1700 : 1000); };
+      const endCall = (cut, lab) => { if (ended) return; ended = true; timers.forEach(clearTimeout); clearInterval(callTimer); if (cut !== true) lineEl.classList.remove("show"); logCall(name, false); tEl.textContent = lab || "通话结束"; setTimeout(closeCall, cut === true ? 1600 : 900); if (C.onEnd) setTimeout(C.onEnd, cut === true ? 1700 : 1000); };
       callEl.querySelector("[data-end]").onclick = () => endCall();
       if (C.onAnswer) C.onAnswer();
       if (C.ambience === "sea") startSea();
@@ -1795,7 +1795,7 @@
     let at = o.start ?? 1100;
     for (const l of lines) {
       if (l.cut) {
-        // 말하는 도중 끊기: 대사를 띄운 뒤 cutAfter(기본 1초) 만에 바로 통화 종료 (대사는 그대로 남음)
+        // 말하는 도중 끊기: 대사를 띄운 뒤 cutAfter(기본 1초) 만에 바로 通话结束 (대사는 그대로 남음)
         timers.push(setTimeout(() => {
           lineEl.innerHTML = `${label(l)}${esc(l.text)}`;
           lineEl.classList.toggle("me", l.who === "me");
@@ -1838,9 +1838,9 @@
     hideBanner();
     callEl = h(`<div class="callui live dialing">
       <div class="cu-liveview">
-        <div class="cu-name">${esc(name)}</div><div class="cu-sub"><span class="cu-sim">기본</span><span data-ctime>호출 중...</span></div>
+        <div class="cu-name">${esc(name)}</div><div class="cu-sub"><span class="cu-sim">默认</span><span data-ctime>正在呼叫...</span></div>
         <div class="cu-line" data-line></div>
-        <div class="cu-grid">${[["mute", "소리 끔"], ["keypad", "키패드"], ["audio", "오디오"], ["add", "통화 추가"], ["facetime", "FaceTime"], ["contact", "연락처"]].map(([k, l]) => `<button class="cu-key" data-key="${k}"><i>${CI[k]}</i><small>${l}</small></button>`).join("")}</div>
+        <div class="cu-grid">${[["mute", "静音"], ["keypad", "拨号键盘"], ["audio", "音频"], ["add", "添加通话"], ["facetime", "FaceTime"], ["contact", "通讯录"]].map(([k, l]) => `<button class="cu-key" data-key="${k}"><i>${CI[k]}</i><small>${l}</small></button>`).join("")}</div>
         <button class="cu-end" data-end>${CI.hang}</button>
       </div>
     </div>`);
@@ -1856,35 +1856,35 @@
       timers.forEach(clearTimeout); clearInterval(ringbackTimer); clearInterval(callTimer); if (!keepLine) lineEl.classList.remove("show");
       logOutgoing(name); tEl.textContent = label; setTimeout(closeCall, keepLine ? 1600 : 900);
     };
-    callEl.querySelector("[data-end]").onclick = () => finish(callEl.classList.contains("dialing") ? "통화 취소" : "통화 종료");
+    callEl.querySelector("[data-end]").onclick = () => finish(callEl.classList.contains("dialing") ? "已取消" : "通话结束");
     // 처음 몇 번은 상대가 바로 끊음 (rejectFirst: [ms, ms, ...])
     const tries = (callTries[name] = (callTries[name] || 0) + 1), rej = script.rejectFirst || [];
-    if (tries <= rej.length) { timers.push(setTimeout(() => { clearInterval(ringbackTimer); finish("통화 종료"); }, rej[tries - 1])); return; }
+    if (tries <= rej.length) { timers.push(setTimeout(() => { clearInterval(ringbackTimer); finish("通话结束"); }, rej[tries - 1])); return; }
     // 한 번 통화가 이어진 뒤에는 '없는 번호' 안내만 나옴
     if (script.deadAfterOnce && script._used) {
       timers.push(setTimeout(() => {
-        clearInterval(ringbackTimer); callEl.classList.remove("dialing"); tEl.textContent = "연결 중...";
-        runLines([{ text: script.deadText || "지금 거신 번호는 없는 번호입니다. 다시 확인하시고 걸어 주시기 바랍니다.", ms: 4200 }], lineEl, timers, { start: 300, hangUp: 400, name: "안내" , showWho: false }, () => finish("통화 종료"));
+        clearInterval(ringbackTimer); callEl.classList.remove("dialing"); tEl.textContent = "连接中...";
+        runLines([{ text: script.deadText || "您所拨打的号码是空号。请确认后再拨。", ms: 4200 }], lineEl, timers, { start: 300, hangUp: 400, name: "语音提示" , showWho: false }, () => finish("通话结束"));
       }, 2200));
       return;
     }
     const waitMs = answered ? (script.answerAfter ?? 3000 + Math.random() * 3000) : 9000;
     timers.push(setTimeout(() => {
       clearInterval(ringbackTimer);
-      if (!answered) { finish("응답 없음"); return; }
+      if (!answered) { finish("无应答"); return; }
       script._used = true;
       if (script.ambience === "sea") startSea();
       callEl.classList.remove("dialing");
       const t0 = Date.now();
       const draw = () => { const sec = Math.floor((Date.now() - t0) / 1000); tEl.textContent = `${String(Math.floor(sec / 60)).padStart(2, "0")}:${String(sec % 60).padStart(2, "0")}`; };
       draw(); callTimer = setInterval(draw, 1000);
-      runLines((tries - rej.length >= 2 && script.again) || script.lines || [], lineEl, timers, { start: script.lineStart, hangUp: script.hangUpAfter, name }, (cut, lab) => finish(lab || "통화 종료", cut));
+      runLines((tries - rej.length >= 2 && script.again) || script.lines || [], lineEl, timers, { start: script.lineStart, hangUp: script.hangUpAfter, name }, (cut, lab) => finish(lab || "通话结束", cut));
     }, waitMs));
   }
   function logOutgoing(name) {
     const last = P.calls[0];
     if (last && last.name === name && last.dir === "out" && !last.missed && last.when === P.time) last.count = (last.count || 1) + 1;
-    else P.calls.unshift({ name, kind: (P.calls.find(c => c.name === name) || {}).kind || "휴대전화", dir: "out", when: P.time });
+    else P.calls.unshift({ name, kind: (P.calls.find(c => c.name === name) || {}).kind || "手机", dir: "out", when: P.time });
     refreshCalls();
   }
   function refreshCalls() { document.querySelectorAll("[data-calls]").forEach(box => box.innerHTML = callsHTML()); }
@@ -1916,8 +1916,8 @@
       if (e.alert && e.date === today && e.start && e.start <= P.time && !alerted.has(id)) {
         alerted.add(id);
         const [eh, em] = e.start.split(":").map(Number);
-        const when = `${eh < 12 ? "오전" : "오후"} ${eh % 12 === 0 ? 12 : eh % 12}:${String(em).padStart(2, "0")}`;
-        showBanner({ kind: "calendar", app: "캘린더", from: e.title, text: `오늘 ${when}${e.place ? " · " + e.place : ""}`, duration: 9000, onHide: startKakaoQueue });
+        const when = `${eh < 12 ? "上午" : "下午"} ${eh % 12 === 0 ? 12 : eh % 12}:${String(em).padStart(2, "0")}`;
+        showBanner({ kind: "calendar", app: "日历", from: e.title, text: `今天 ${when}${e.place ? " · " + e.place : ""}`, duration: 9000, onHide: startKakaoQueue });
         chime();
       }
     });
@@ -1931,7 +1931,7 @@
   const PASS_LEN = PASS.length || 4;
   const keys = [["1", ""], ["2", "ABC"], ["3", "DEF"], ["4", "GHI"], ["5", "JKL"], ["6", "MNO"], ["7", "PQRS"], ["8", "TUV"], ["9", "WXYZ"]];
   function lockTime(t) { return `<div class="lk-time" data-ltime>${t}</div>`; }
-  /* 잠금화면 위젯: 디데이 · 음악 · 알람 */
+  /* 잠금화면 위젯: 디데이 · 음악 · 闹钟 */
   function lockWidgets() {
     const W = P.lockWidgets; if (!W) return "";
     let dday = "";
@@ -1954,17 +1954,17 @@
     lockEl = h(`<div class="lock">
       <div class="lk-main">
         <svg class="lk-ic" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5" fill="currentColor"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>
-        <div class="lk-date">${TODAY.getMonth() + 1}월 ${TODAY.getDate()}일 (${WD[TODAY.getDay()]})</div>
+        <div class="lk-date">${TODAY.getMonth() + 1}月 ${TODAY.getDate()}日 星期${WD[TODAY.getDay()]}</div>
         ${lockTime(`${+hh > 12 ? +hh - 12 : +hh}:${mm}`)}
         ${lockWidgets()}
         <div class="lk-bottom"><span class="lk-btn"><svg viewBox="0 0 24 24"><path d="M8 2h8l-1.5 6v13a1.5 1.5 0 0 1-1.5 1.5h-2A1.5 1.5 0 0 1 9.5 21V8z" fill="currentColor"/></svg></span><span class="lk-btn"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z" fill="currentColor"/><circle cx="12" cy="13" r="3.5" fill="#333"/></svg></span></div>
-        <div class="lk-hint">위로 쓸어올려 열기</div>
+        <div class="lk-hint">向上滑动解锁</div>
       </div>
       <div class="lk-pin">
-        <div class="pin-title">암호 입력</div>
+        <div class="pin-title">输入密码</div>
         <div class="pin-dots">${"<i></i>".repeat(PASS_LEN)}</div>
         <div class="pin-pad">${keys.map(([n, l]) => `<button data-k="${n}"><b>${n}</b><small>${l}</small></button>`).join("")}<span></span><button data-k="0"><b>0</b></button><span></span></div>
-        <div class="pin-foot"><span>긴급 상황</span><button data-del>취소</button></div>
+        <div class="pin-foot"><span>紧急情况</span><button data-del>取消</button></div>
       </div>
     </div>`);
     $("#device").insertBefore(lockEl, $("#banner"));
@@ -1993,8 +1993,8 @@
       <div class="lp-times"><span data-cur></span><span data-left></span></div>
       <div class="lp-ctrl"><button data-prev>⏮</button><button data-play class="big"></button><button data-next>⏭</button></div>
       <div class="lp-vol"><span>🔈</span><i><b></b></i><span>🔊</span></div>
-      ${M.link ? `<a class="lp-link" href="${esc(M.link)}" target="_blank" rel="noopener">YouTube에서 듣기 ↗</a>` : ""}
-      <button class="lp-close" data-pclose>닫기</button>
+      ${M.link ? `<a class="lp-link" href="${esc(M.link)}" target="_blank" rel="noopener">在 YouTube 收听 ↗</a>` : ""}
+      <button class="lp-close" data-pclose>关闭</button>
     </div>`);
     const draw = () => {
       pl.querySelector("[data-fill]").style.width = (pos / total * 100) + "%";
@@ -2018,7 +2018,7 @@
   function hidePin() { lockEl.classList.remove("pin"); }
   function drawPin() {
     lockEl.querySelectorAll(".pin-dots i").forEach((d, i) => d.classList.toggle("on", i < pin.length));
-    lockEl.querySelector("[data-del]").textContent = pin ? "삭제" : "취소";
+    lockEl.querySelector("[data-del]").textContent = pin ? "删除" : "取消";
   }
   function press(n) {
     if (!locked || pin.length >= PASS_LEN) return;
